@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <style>
+        .product-card {
+            background-color: #F6EB13;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+            text-align: center;
+            transition: all 0.3s ease;
+            max-width: 500px;
+            margin: 20px auto 0;
+            margin-bottom: 20px;
+            color: #3398CC
+            }
+        .product-card > h2 {
+            background-color: #FFCC04;
+        }
+        .btn {
+            display: inline-block;
+            background-color: #FFCC04;
+            color: #3398CC;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+            margin: 0 10px;
+        }
+
+        .btn:hover {
+            background-color: #3398CC;
+            color: #FFCC04;
+        }
+
+        .btn-danger {
+            background-color: #d9534f;
+            text-decoration: none !important;
+        }
+
+        .btn-danger:hover {
+            background-color: #d2221c;
+        }
+        .buttons-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+    </style>    
+    <div class="product-card">    
+        <h2>{{ object.name }}</h2>
+        <p><strong>Categoria: </strong>{{ object.category }}</p>
+        <p><strong>Qtd em estoque: </strong>{{ object.amount }}</p>
+        <p><strong>Preço: </strong>R${{ object.price }}</p>
+        <p><strong>Ativo: </strong>
+            {% if object.ativo %}
+                Sim
+            {% else %}
+                Não
+            {% endif %}</p>
+        <p><strong>Premium: </strong>
+            {% if object.premium %}
+                Sim
+            {% else %}
+                Não
+            {% endif %}</p>
+        <p><strong>NCM: </strong>{{ object.ncm }}</p>
+        <p><strong>Cadastrado em: </strong>{{ object.created_at }}</p>
+    </div>
+    <div class="buttons-container">
+        <a href="{% url 'product_update' pk=object.pk %}" class="btn btn-primary"><strong>Editar Produto</strong></a>
+        <a href="{% url 'product_delete' pk=object.pk %}" class="btn btn-primary"><strong>Deletar Produto</strong></a>
+        <a href="{% url 'product_log' pk=object.pk %}" class="btn btn-primary"><strong>Histórico de Alterações</strong></a>
+    </div>
+
+{% endblock %}

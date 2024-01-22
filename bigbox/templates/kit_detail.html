@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <style>
+        .product-card {
+            background-color: #F6EB13;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+            text-align: center;
+            transition: all 0.3s ease;
+            max-width: 500px;
+            margin: 20px auto 0;
+            margin-bottom: 20px;
+            color: #3398CC
+            }
+        .product-card > h2 {
+            background-color: #FFCC04;
+        }
+        .btn {
+            display: inline-block;
+            background-color: #FFCC04;
+            color: #3398CC;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+            margin: 0 10px;
+        }        
+
+        .btn-danger {
+            background-color: #d9534f;
+            text-decoration: none !important;
+        }
+
+        .btn-danger:hover {
+            background-color: #d2221c;
+        }
+        .buttons-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+    </style>
+    <div><h2 class="center-content">Kit: {{ object.label }}</h2></div>  
+    <div style="margin: 10px;" class="center-content">
+        <span class="btn btn-primary"><strong>Custo:</strong> R$ {{ object.cost }}</span>        
+        <span class="btn btn-primary"> <strong>Lucro:</strong> R$ {{ object.profit }}</span>        
+    </div>  
+    <div style="margin: 10px;" class="center-content" >  
+        <table overflow-x="auto" overflow-y="auto" margin="5px" width="60%" class="table table-produto">
+            <thead>
+                <th width="80%">Conteúdo do Kit</th> 
+            </thead>
+            <tbody>
+                {% for product in content %}                        
+                    <tr>
+                        <td>{{ product }}</td>                        
+                    </tr>                        
+                {% endfor %}
+            </tbody>
+        </table>        
+    </div>
+    <div  style="margin: 10px;" class="center-content">    
+        <a href="{% url 'kit_delete' pk=object.pk %}" class="btn btn-danger"><strong>Deletar Kit</strong></a>
+    </div>
+    
+
+{% endblock %}
