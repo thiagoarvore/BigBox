@@ -104,14 +104,12 @@
             <li><a href="{% url 'new_product' %}">Cadastrar Produto</a></li>
             <li><a href="{% url 'kit_list' %}">Kits</a></li>
             <li><a href="{% url 'new_kit' %}">Criar Kit</a></li>
-            <li><a>Sortear kit</a></li>
             <li><a href="{% url 'login' %}">Sair</a></li>
         {% endif %}
 
       </ul>
     </nav>
   </header>
-
   <main>
     {% block content %}
     {% endblock %}
