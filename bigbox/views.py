@@ -1,12 +1,12 @@
 from typing import Any
-from django.shortcuts import render, redirect 
+from django.shortcuts import render, redirect, get_object_or_404 
 from bigbox.models import Category, Product, Kit
 from django.views import View
 from django.views.generic import ListView, CreateView, DetailView, DeleteView, UpdateView
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from bigbox.forms import ProductModelForm, KitModelForm, ProductSelectionForm
 from bigbox import models
 import json
@@ -154,3 +154,15 @@ class KitDeleteView(DeleteView):
     def get_success_url(self):
         return reverse_lazy('kit_list')
 
+def create_identical_kit(request, pk):
+    original_kit = get_object_or_404(Kit, pk=pk)
+    
+    new_kit = Kit.objects.create(
+        cost=original_kit.cost,
+        price=original_kit.price,
+        profit=original_kit.profit,
+        label=original_kit.label  
+    )
+    new_kit.content.set(original_kit.content.all())
+
+    return HttpResponseRedirect(reverse('kit_detail', args=[new_kit.pk]))

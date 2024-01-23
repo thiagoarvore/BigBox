@@ -67,8 +67,6 @@
                 <tbody>
                     {% for audit_log in audit_logs %}
                         {% for change, value in audit_log.changes.items %}
-
-                            
                                 <tr>
                                     <td>{{ audit_log.timestamp }}</td>
                                     <td>{{ username }}</td>
@@ -102,7 +100,6 @@
                                         
                                     </td>                                                               
                                 </tr>
-                            
                         {% endfor %}
                     {% endfor %}
                 </tbody>

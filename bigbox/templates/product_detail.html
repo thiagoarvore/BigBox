@@ -72,8 +72,6 @@
     </div>
     <div class="buttons-container">
         <a href="{% url 'product_update' pk=object.pk %}" class="btn btn-primary"><strong>Editar Produto</strong></a>
-        <a href="{% url 'product_delete' pk=object.pk %}" class="btn btn-primary"><strong>Deletar Produto</strong></a>
         <a href="{% url 'product_log' pk=object.pk %}" class="btn btn-primary"><strong>Histórico de Alterações</strong></a>
     </div>
-
 {% endblock %}

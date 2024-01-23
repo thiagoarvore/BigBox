@@ -28,7 +28,12 @@
             cursor: pointer;
             transition: background-color 0.3s ease-in-out;
             margin: 0 10px;
-        }        
+        }
+                
+        .btn:hover {
+            background-color: #3398CC;
+            color: #FFCC04;
+        }
 
         .btn-danger {
             background-color: #d9534f;
@@ -64,9 +69,11 @@
             </tbody>
         </table>        
     </div>
-    <div  style="margin: 10px;" class="center-content">    
+    <div  style="margin: 10px;" class="center-content">
+        <form method="post" action="{% url 'create_identical_kit' pk=kit.pk %}">
+            {% csrf_token %}
+            <input type="submit" value="Criar Kit Idêntico" class=" btn btn-primary">
+        </form>  
         <a href="{% url 'kit_delete' pk=object.pk %}" class="btn btn-danger"><strong>Deletar Kit</strong></a>
     </div>
-    
-
 {% endblock %}
