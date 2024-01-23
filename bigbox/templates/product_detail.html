@@ -54,7 +54,7 @@
         <h2>{{ object.name }}</h2>
         <p><strong>Categoria: </strong>{{ object.category }}</p>
         <p><strong>Qtd em estoque: </strong>{{ object.amount }}</p>
-        <p><strong>Preço: </strong>R${{ object.price }}</p>
+        <p><strong>Preço: </strong>R${{ object.price|floatformat:2 }}</p>
         <p><strong>Ativo: </strong>
             {% if object.ativo %}
                 Sim

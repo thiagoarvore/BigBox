@@ -22,7 +22,7 @@ class Product(models.Model):
     history = AuditlogHistoryField()
 
     def __str__(self):
-        return self.name
+        return f'{self.name} R$ {str(self.price)}'
 
 class Kit(models.Model):
     id = models.AutoField(primary_key=True)

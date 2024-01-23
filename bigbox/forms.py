@@ -15,15 +15,21 @@ class ProductModelForm(forms.ModelForm):
         if len(str(price).split('.')[-1]) > 2:
             raise forms.ValidationError("O preço deve ter no máximo duas casas decimais.")
         return price
-
+   
 class KitModelForm(forms.ModelForm):
     class Meta:
         model = Kit
         fields = '__all__'
-
+    products = forms.ModelMultipleChoiceField(
+        queryset=Product.objects.all(),
+        widget=forms.CheckboxSelectMultiple(attrs={'class': 'product-checkbox'}),
+        required=True
+    )
+    total_cost = forms.FloatField(required=False, widget=forms.HiddenInput())
+    
 class ProductSelectionForm(forms.Form):
     products = forms.ModelMultipleChoiceField(
         queryset=Product.objects.all(),
-        widget=forms.CheckboxSelectMultiple,
+        widget=forms.CheckboxSelectMultiple(attrs={'class': 'product-checkbox'}),
         required=True
-    )   
+    )

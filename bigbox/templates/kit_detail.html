@@ -47,8 +47,8 @@
     </style>
     <div><h2 class="center-content">Kit: {{ object.label }}</h2></div>  
     <div style="margin: 10px;" class="center-content">
-        <span class="btn btn-primary"><strong>Custo:</strong> R$ {{ object.cost }}</span>        
-        <span class="btn btn-primary"> <strong>Lucro:</strong> R$ {{ object.profit }}</span>        
+        <span class="btn btn-primary"><strong>Custo:</strong> R$ {{ object.cost|floatformat:2 }}</span>        
+        <span class="btn btn-primary"> <strong>Lucro:</strong> R$ {{ object.profit|floatformat:2 }}</span>        
     </div>  
     <div style="margin: 10px;" class="center-content" >  
         <table overflow-x="auto" overflow-y="auto" margin="5px" width="60%" class="table table-produto">
@@ -58,7 +58,7 @@
             <tbody>
                 {% for product in content %}                        
                     <tr>
-                        <td>{{ product }}</td>                        
+                        <td>{{ product.name }}</td>                        
                     </tr>                        
                 {% endfor %}
             </tbody>

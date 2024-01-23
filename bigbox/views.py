@@ -108,6 +108,7 @@ class KitDetailView(DetailView):
 
 
 def create_kit(request):
+    total_cost = 0
     if request.method == 'POST':
         form = ProductSelectionForm(request.POST)
         if form.is_valid():
@@ -126,10 +127,23 @@ def create_kit(request):
                 label='789'+ str(ano) + '3128' + '-' + str(end)
             )
             kit.content.set(selected_products)
+            
+            for product in selected_products:
+                total_cost += product.price
+            context = {
+                'form': form,
+                'kit_price': total_cost,
+            }
             return redirect('kit_list')
     else:
-        form = ProductSelectionForm()
-    return render(request, 'new_kit.html', {'form': form})
+        form = ProductSelectionForm()    
+    context = {
+                'form': form,
+                'kit_price': total_cost,
+            }    
+    return render(request, 'new_kit.html', context)
+
+
 
 class KitDeleteView(DeleteView):
     model = Kit

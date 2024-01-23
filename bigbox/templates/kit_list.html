@@ -18,8 +18,8 @@
                     {% for kit in kits %}                        
                         <tr>
                             <td><a href="{% url 'kit_detail' pk=kit.pk %}">{{ kit.label }}</a></td>                            
-                            <td>R$ {{ kit.cost }}</td>
-                            <td>R${{ kit.profit }}</td>
+                            <td>R$ {{ kit.cost|floatformat:2 }}</td>
+                            <td>R${{ kit.profit|floatformat:2 }}</td>
                         </tr>                        
                     {% endfor %}
                 </tbody>

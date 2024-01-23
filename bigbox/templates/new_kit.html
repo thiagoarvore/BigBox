@@ -57,12 +57,14 @@
             <table>
                 {{ form.as_table }}
             </table>
+            <div style="margin: 10px;" class="center-content">
+                Valor total do kit: R$ {{ kit_price|floatformat:2  }}
+            </div>
             <div class="center-content">
-                <input type="submit" value="Criar" class="btn btn-primary center-content" style="margin: 10px;">
-            </div>            
+                <input type="submit" value="Criar" class="btn btn-primary center-content" style="margin: 5px;">
+            </div>                     
         </form>
         {% endif %}
-    </div>
-    
+    </div>   
 
 {% endblock %}

@@ -95,9 +95,9 @@
                                         {% elif value.1 == 'True' %}
                                             Sim
                                         {% elif change == 'price' %}
-                                            R$ {{ value.1 }}
+                                            R$ {{ value.1|floatformat:2 }}
                                         {% else %}
-                                            {{ value.1 }}
+                                            {{ value.1|floatformat:2 }}
                                         {% endif %}
                                         
                                     </td>                                                               
