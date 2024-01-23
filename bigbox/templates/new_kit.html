@@ -55,7 +55,7 @@
         <form method="post">
             {% csrf_token %}
             <table>
-                {{ form.as_table }}
+                {{ form.as_p }}
             </table>
             <div style="margin: 10px;" class="center-content">
                 Valor total do kit: R$ {{ kit_price|floatformat:2  }}

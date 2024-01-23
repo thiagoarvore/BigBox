@@ -25,7 +25,7 @@ class KitModelForm(forms.ModelForm):
         widget=forms.CheckboxSelectMultiple(attrs={'class': 'product-checkbox'}),
         required=True
     )
-    total_cost = forms.FloatField(required=False, widget=forms.HiddenInput())
+        
     
 class ProductSelectionForm(forms.Form):
     products = forms.ModelMultipleChoiceField(
@@ -33,3 +33,4 @@ class ProductSelectionForm(forms.Form):
         widget=forms.CheckboxSelectMultiple(attrs={'class': 'product-checkbox'}),
         required=True
     )
+    label = forms.CharField(max_length=50, required=False)

@@ -113,18 +113,16 @@ def create_kit(request):
         form = ProductSelectionForm(request.POST)
         if form.is_valid():
             selected_products = form.cleaned_data['products']
-            cost = sum(product.price for product in selected_products) + 1.50
-            label = '-'.join(str(product.id).zfill(3) for product in selected_products)
+            cost = sum(product.price for product in selected_products) + 1.50            
             price = 27.99
             profit = round(price-cost, 2)
-            ano = datetime.now().year
-            end = randint(100, 1000)
-
+            label = form.cleaned_data.get('label', '')
+            
             kit = Kit.objects.create(
                 cost=cost,
                 price=27.99,
-                profit=profit,
-                label='789'+ str(ano) + '3128' + '-' + str(end)
+                profit=profit, 
+                label=label               
             )
             kit.content.set(selected_products)
             
@@ -165,4 +163,4 @@ def create_identical_kit(request, pk):
     )
     new_kit.content.set(original_kit.content.all())
 
-    return HttpResponseRedirect(reverse('kit_detail', args=[new_kit.pk]))
+    return HttpResponseRedirect(reverse('kit_list'))

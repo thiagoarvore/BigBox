@@ -30,7 +30,7 @@ class Kit(models.Model):
     cost = models.FloatField()
     price = models.FloatField()
     profit = models.FloatField()
-    label = models.CharField(max_length=200)
+    label = models.CharField(max_length=50)
     history = AuditlogHistoryField()
 
 auditlog.register(Product)
