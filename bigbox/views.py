@@ -7,11 +7,18 @@ from django.urls import reverse_lazy, reverse
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
-from bigbox.forms import ProductModelForm, KitModelForm, ProductSelectionForm
+from bigbox.forms import ProductModelForm, KitModelForm, ProductSelectionForm, CategoryModelForm
 from bigbox import models
 import json
 from datetime import datetime
 from random import randint
+
+@method_decorator(login_required(login_url='login'), name='dispatch')
+class CategoryCreateView(CreateView):
+    model = Category
+    form_class = CategoryModelForm
+    template_name = 'new_category.html'
+    success_url = '/products_list/'
 
 @method_decorator(login_required(login_url='login'), name='dispatch')
 class ProductsListView(ListView):
@@ -69,9 +76,7 @@ class ProductDeleteView(DeleteView):
 @method_decorator(login_required(login_url='login'), name='dispatch')
 class ProductLogListView(DetailView):
     model = Product
-    template_name = 'product_log.html'
-
-    
+    template_name = 'product_log.html'    
 
     def get_context_data(self, **kwargs):
         from django.http import HttpRequest
@@ -81,8 +86,7 @@ class ProductLogListView(DetailView):
         parsed_logs = []
         for log in audit_logs:
             changes_dict = json.loads(log.changes)
-            parsed_logs.append({'timestamp': log.timestamp, 'changes': changes_dict})
-        
+            parsed_logs.append({'timestamp': log.timestamp, 'changes': changes_dict})        
         
         context['product'] = self.object
         context['audit_logs'] = parsed_logs #history é o campo do model Product e audit_logs é o que passa para o template  
@@ -106,9 +110,9 @@ class KitDetailView(DetailView):
         
         return context
 
-
 def create_kit(request):
     total_cost = 0
+    allproducts = Product.objects.all()
     if request.method == 'POST':
         form = ProductSelectionForm(request.POST)
         if form.is_valid():
@@ -131,17 +135,18 @@ def create_kit(request):
             context = {
                 'form': form,
                 'kit_price': total_cost,
+                'product.price': product.price
             }
             return redirect('kit_list')
     else:
-        form = ProductSelectionForm()    
+        form = ProductSelectionForm() 
+        
     context = {
                 'form': form,
                 'kit_price': total_cost,
+                'allproducts': allproducts,
             }    
     return render(request, 'new_kit.html', context)
-
-
 
 class KitDeleteView(DeleteView):
     model = Kit

@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.views.generic import RedirectView
 from django.urls import path, reverse_lazy
 from accounts.views import login_view
-from bigbox.views import KitDetailView, ProductsListView, Test, ProductDetailView, ProductCreateView, ProductUpdateView, ProductDeleteView, ProductLogListView, KitListView, create_kit, KitDeleteView, create_identical_kit
+from bigbox.views import KitDetailView, ProductsListView, Test, ProductDetailView, ProductCreateView, ProductUpdateView, ProductDeleteView, ProductLogListView, KitListView, create_kit, KitDeleteView, create_identical_kit, CategoryCreateView
 
 
 
@@ -22,5 +22,6 @@ urlpatterns = [
     path('kit_list/', KitListView.as_view(), name='kit_list'),
     path('kit/<int:pk>', KitDetailView.as_view(), name='kit_detail'),
     path('kit/<int:pk>/delete/', KitDeleteView.as_view(), name='kit_delete'),
-    path('kit/<int:pk>/create_identical/', create_identical_kit, name='create_identical_kit'), 
+    path('kit/<int:pk>/create_identical/', create_identical_kit, name='create_identical_kit'),
+    path('new_category/', CategoryCreateView.as_view(), name='new_category'), 
 ]

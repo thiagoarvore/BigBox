@@ -1,5 +1,10 @@
 from django import forms 
-from bigbox.models import Category, Product, Kit
+from bigbox.models import Category, Product, Kit, Category
+
+class CategoryModelForm(forms.ModelForm):
+    class Meta:
+        model = Category
+        fields = '__all__'
 
 class ProductModelForm(forms.ModelForm):
     class Meta:
@@ -19,18 +24,22 @@ class ProductModelForm(forms.ModelForm):
 class KitModelForm(forms.ModelForm):
     class Meta:
         model = Kit
-        fields = '__all__'
-    products = forms.ModelMultipleChoiceField(
-        queryset=Product.objects.all(),
-        widget=forms.CheckboxSelectMultiple(attrs={'class': 'product-checkbox'}),
-        required=True
-    )
-        
-    
+        fields = '__all__'    
+            
 class ProductSelectionForm(forms.Form):
     products = forms.ModelMultipleChoiceField(
         queryset=Product.objects.all(),
+        to_field_name="name",
         widget=forms.CheckboxSelectMultiple(attrs={'class': 'product-checkbox'}),
         required=True
     )
-    label = forms.CharField(max_length=50, required=False)
+    label = forms.CharField(max_length=50, required=False, label="Etiqueta")
+
+    def __init__(self, *args, **kwargs):
+        super(ProductSelectionForm, self).__init__(*args, **kwargs)
+        for product in self.fields['products'].queryset:
+            self.fields[f'product_{product.id}'] = forms.BooleanField(
+                label=product.name,
+                required=False,
+                widget=forms.CheckboxInput(attrs={'data-price': product.price}),
+            )

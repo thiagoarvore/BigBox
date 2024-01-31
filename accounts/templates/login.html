@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div display="flex" align-items="center" justify-content="center" class="product-card">
-        <form method="post">
+    <div style="margin: 10px;" class="product-card center-content">
+        <form method="post" class="center-content">
             {% csrf_token %}
-            <table>
-                {{ login_form.as_table }}
+            <table class="center-content">
+                {{ login_form.as_p }}
             </table>
-            <input type="submit" value="Entrar">
+            <input style="margin: 10px;" type="submit" value="Entrar" class="btn btn-primary center-content">
         </form>
     </div>
 

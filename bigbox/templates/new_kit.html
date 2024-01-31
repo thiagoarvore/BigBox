@@ -52,18 +52,53 @@
     </style>    
     <div style="margin: 10px;" class="center-content">
         {% if user.is_authenticated %}
-        <form method="post">
+        <form id="products-form" method="post">
             {% csrf_token %}
             <table>
                 {{ form.as_p }}
-            </table>
-            <div style="margin: 10px;" class="center-content">
-                Valor total do kit: R$ {{ kit_price|floatformat:2  }}
-            </div>
+            </table>            
             <div class="center-content">
                 <input type="submit" value="Criar" class="btn btn-primary center-content" style="margin: 5px;">
             </div>                     
         </form>
         {% endif %}
-    </div> 
+    </div>
+    <div style="margin: 10px;" class="center-content">
+        <a class="btn-primary center-content">Valor Total do kit: R$ </a>
+        <a id="total-value" class=" btn buttons-container center-content">0,00</a>
+    </div>
+    
+    <script>
+
+    document.addEventListener("DOMContentLoaded", function() {
+        var form = document.getElementById('products-form');
+        var totalCostElement = document.getElementById('total-cost');
+
+        form.addEventListener('change', function() {
+            var selectedProducts = [];
+            var checkboxes = form.querySelectorAll('input[name="products"]:checked');
+            checkboxes.forEach(function(checkbox) {
+                selectedProducts.push(parseFloat(checkbox.dataset.price));
+            });
+
+            var totalCost = selectedProducts.reduce(function(acc, price) {
+                return acc + price;
+            }, 0);
+
+            totalCostElement.textContent = totalCost.toFixed(2);
+        });
+    });
+        
+        const totalValue = document.getElementById('total-value');
+        var productsForm2 = document.getElementById('id_products');
+        var prod = document.getElementById('id_products_0');
+        var prodName = document. getElementById('prodName');
+        
+        let productsList = [];
+        
+        localStorage.setItem('prodName', JSON.stringify(prodName));
+        localStorage.setItem('prod', JSON.stringify(prod));
+        localStorage.setItem('products-form2', JSON.stringify(productsForm2));
+        var productsform2 = JSON.parse(localStorage.getItem('products-form2'));
+    </script> 
 {% endblock %}

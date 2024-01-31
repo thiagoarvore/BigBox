@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="Big Box" content="width=device-width, initial-scale=1.0">
   <title>{% block title %}{% endblock %}</title>
   <style>
     body {
@@ -101,12 +101,12 @@
         {% if user.is_authenticated %}
             <li>Bem-vindo, {{ user.username }}</li> 
             <li><a href="{% url 'products_list' %}">Produtos</a></li>
+            <li><a href="{% url 'new_category' %}">Criar categoria</a>
             <li><a href="{% url 'new_product' %}">Cadastrar Produto</a></li>
             <li><a href="{% url 'kit_list' %}">Kits</a></li>
             <li><a href="{% url 'new_kit' %}">Criar Kit</a></li>
             <li><a href="{% url 'login' %}">Sair</a></li>
         {% endif %}
-
       </ul>
     </nav>
   </header>
