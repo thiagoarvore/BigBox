@@ -5,6 +5,16 @@
         tr > td:hover {
             background-color: #FFCC04;
         }
+        a {
+            display: block;
+            width: 100%;
+            height: 100%;
+            text-decoration: none; /* Remove o sublinhado padrão de links */
+            color: inherit; /* Herda a cor do texto padrão da célula */
+            
+            top: 0;
+            left: 0;
+        }
     </style>
     <div style="margin: 10px;" class="center-content">
         {% if kits %}
@@ -17,7 +27,7 @@
                 <tbody>
                     {% for kit in kits %}                        
                         <tr>
-                            <td><a href="{% url 'kit_detail' pk=kit.pk %}">{{ kit.label }}</a></td>                            
+                            <td><a href="{% url 'kit_detail' pk=kit.pk %}">{{ kit.label }} </a></td>                            
                             <td>R$ {{ kit.cost|floatformat:2 }}</td>
                             <td>R${{ kit.profit|floatformat:2 }}</td>
                         </tr>                        

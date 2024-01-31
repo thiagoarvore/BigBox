@@ -33,13 +33,13 @@ class ProductSelectionForm(forms.Form):
         widget=forms.CheckboxSelectMultiple(attrs={'class': 'product-checkbox'}),
         required=True
     )
-    label = forms.CharField(max_length=50, required=False, label="Etiqueta")
+    label = forms.CharField(max_length=50, required=True, label="Etiqueta")
 
-    def __init__(self, *args, **kwargs):
-        super(ProductSelectionForm, self).__init__(*args, **kwargs)
-        for product in self.fields['products'].queryset:
-            self.fields[f'product_{product.id}'] = forms.BooleanField(
-                label=product.name,
-                required=False,
-                widget=forms.CheckboxInput(attrs={'data-price': product.price}),
-            )
+    # def __init__(self, *args, **kwargs):
+    #     super(ProductSelectionForm, self).__init__(*args, **kwargs)
+    #     for product in self.fields['products'].queryset:
+    #         self.fields[f'product_{product.id}'] = forms.BooleanField(
+    #             label=product.name,
+    #             required=False,
+    #             widget=forms.CheckboxInput(attrs={'data-price': product.price}),
+    #         )

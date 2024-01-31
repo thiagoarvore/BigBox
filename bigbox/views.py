@@ -116,9 +116,9 @@ def create_kit(request):
     if request.method == 'POST':
         form = ProductSelectionForm(request.POST)
         if form.is_valid():
-            selected_products = form.cleaned_data['products']
-            cost = sum(product.price for product in selected_products) + 1.50            
+            selected_products = form.cleaned_data['products']                       
             price = 27.99
+            cost = sum(product.price for product in selected_products) + 1.50 + (price*6/100)
             profit = round(price-cost, 2)
             label = form.cleaned_data.get('label', '')
             
@@ -132,11 +132,6 @@ def create_kit(request):
             
             for product in selected_products:
                 total_cost += product.price
-            context = {
-                'form': form,
-                'kit_price': total_cost,
-                'product.price': product.price
-            }
             return redirect('kit_list')
     else:
         form = ProductSelectionForm() 

@@ -66,39 +66,39 @@
     <div style="margin: 10px;" class="center-content">
         <a class="btn-primary center-content">Valor Total do kit: R$ </a>
         <a id="total-value" class=" btn buttons-container center-content">0,00</a>
-    </div>
-    
-    <script>
-
-    document.addEventListener("DOMContentLoaded", function() {
-        var form = document.getElementById('products-form');
-        var totalCostElement = document.getElementById('total-cost');
-
-        form.addEventListener('change', function() {
-            var selectedProducts = [];
-            var checkboxes = form.querySelectorAll('input[name="products"]:checked');
-            checkboxes.forEach(function(checkbox) {
-                selectedProducts.push(parseFloat(checkbox.dataset.price));
-            });
-
-            var totalCost = selectedProducts.reduce(function(acc, price) {
-                return acc + price;
-            }, 0);
-
-            totalCostElement.textContent = totalCost.toFixed(2);
-        });
-    });
-        
-        const totalValue = document.getElementById('total-value');
-        var productsForm2 = document.getElementById('id_products');
-        var prod = document.getElementById('id_products_0');
-        var prodName = document. getElementById('prodName');
-        
-        let productsList = [];
-        
-        localStorage.setItem('prodName', JSON.stringify(prodName));
-        localStorage.setItem('prod', JSON.stringify(prod));
-        localStorage.setItem('products-form2', JSON.stringify(productsForm2));
-        var productsform2 = JSON.parse(localStorage.getItem('products-form2'));
-    </script> 
+        <script>
+            // Função para construir o array JS no carregamento da página
+            document.addEventListener('DOMContentLoaded', function() {
+              var productArray = {};
+              // Itera sobre todos os produtos disponíveis no formulário
+              document.querySelectorAll('[name="products"]').forEach(function(checkbox) {
+                var productId = checkbox.id; // Pega o valor do atributo "value" do checkbox
+                var productPrice = checkbox.dataset.price; // Pega o valor do atributo "data-price" do checkbox
+                // Adiciona ao array JS
+                productArray[productId] = {
+                  price: parseFloat(productPrice)
+                };
+              });
+              console.log('productArray', productArray)
+              // Calcula o somatório dos produtos selecionados
+              function updateSelectedProductsTotal() {
+                var total = 0;
+                // Itera sobre os produtos selecionados
+                document.querySelectorAll('[name="products"]:checked').forEach(function(checkbox) {
+                  var productId = checkbox.id;
+                  total += productArray[productId].price;
+                });
+                // Atualiza o conteúdo da div
+                document.getElementById('total-value').textContent = 'Total: R$ ' + total.toFixed(2);
+              }
+              // Adiciona ouvinte de evento para chamar a função quando os checkboxes são alterados
+              document.querySelectorAll('[name="products"]').forEach(function(checkbox) {
+                checkbox.addEventListener('change', function() {
+                  updateSelectedProductsTotal();
+                });
+              });
+              // Chama a função inicialmente para exibir o total no carregamento da página
+              updateSelectedProductsTotal();
+              });
+          </script>
 {% endblock %}
