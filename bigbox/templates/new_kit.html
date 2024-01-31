@@ -66,39 +66,41 @@
     <div style="margin: 10px;" class="center-content">
         <a class="btn-primary center-content">Valor Total do kit: R$ </a>
         <a id="total-value" class=" btn buttons-container center-content">0,00</a>
-        <script>
-            // Função para construir o array JS no carregamento da página
-            document.addEventListener('DOMContentLoaded', function() {
-              var productArray = {};
-              // Itera sobre todos os produtos disponíveis no formulário
-              document.querySelectorAll('[name="products"]').forEach(function(checkbox) {
+    </div>
+    <script>
+        // Função para construir o array JS no carregamento da página
+        document.addEventListener('DOMContentLoaded', function() {
+            var productArray = {};
+            // Itera sobre todos os produtos disponíveis no formulário
+            document.querySelectorAll('[type="checkbox"]').forEach(function(checkbox) {
                 var productId = checkbox.id; // Pega o valor do atributo "value" do checkbox
                 var productPrice = checkbox.dataset.price; // Pega o valor do atributo "data-price" do checkbox
                 // Adiciona ao array JS
                 productArray[productId] = {
-                  price: parseFloat(productPrice)
+                    price: parseFloat(productPrice)
                 };
-              });
-              console.log('productArray', productArray)
-              // Calcula o somatório dos produtos selecionados
-              function updateSelectedProductsTotal() {
+            });
+            console.log('productArray', productArray)
+            // Calcula o somatório dos produtos selecionados
+            function updateSelectedProductsTotal() {
                 var total = 0;
                 // Itera sobre os produtos selecionados
-                document.querySelectorAll('[name="products"]:checked').forEach(function(checkbox) {
-                  var productId = checkbox.id;
-                  total += productArray[productId].price;
+                document.querySelectorAll('[type="checkbox"]:checked').forEach(function(checkbox) {
+                    var productId = checkbox.id;
+                    total += productArray[productId].price;
                 });
                 // Atualiza o conteúdo da div
                 document.getElementById('total-value').textContent = 'Total: R$ ' + total.toFixed(2);
-              }
-              // Adiciona ouvinte de evento para chamar a função quando os checkboxes são alterados
-              document.querySelectorAll('[name="products"]').forEach(function(checkbox) {
+                console.log('prod', total)
+            }
+            // Adiciona ouvinte de evento para chamar a função quando os checkboxes são alterados
+            document.querySelectorAll('[type="checkbox"]').forEach(function(checkbox) {
                 checkbox.addEventListener('change', function() {
-                  updateSelectedProductsTotal();
+                        updateSelectedProductsTotal();
                 });
-              });
-              // Chama a função inicialmente para exibir o total no carregamento da página
-              updateSelectedProductsTotal();
-              });
-          </script>
+            });
+            // Chama a função inicialmente para exibir o total no carregamento da página
+            updateSelectedProductsTotal();
+        });
+        </script>
 {% endblock %}

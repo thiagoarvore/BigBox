@@ -114,9 +114,15 @@ def create_kit(request):
     total_cost = 0
     allproducts = Product.objects.all()
     if request.method == 'POST':
-        form = ProductSelectionForm(request.POST)
+        form = ProductSelectionForm(request.POST or None)
         if form.is_valid():
-            selected_products = form.cleaned_data['products']                       
+            selected_products = []
+            all_products = Product.objects.all()
+
+            for product in all_products:
+                field_name = f'product_{product.id}'
+                if form.cleaned_data.get(field_name):
+                    selected_products.append(product)                      
             price = 27.99
             cost = sum(product.price for product in selected_products) + 1.50 + (price*6/100)
             profit = round(price-cost, 2)

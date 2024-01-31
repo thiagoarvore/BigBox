@@ -25,21 +25,19 @@ class KitModelForm(forms.ModelForm):
     class Meta:
         model = Kit
         fields = '__all__'    
-            
-class ProductSelectionForm(forms.Form):
-    products = forms.ModelMultipleChoiceField(
-        queryset=Product.objects.all(),
-        to_field_name="name",
-        widget=forms.CheckboxSelectMultiple(attrs={'class': 'product-checkbox'}),
-        required=True
-    )
-    label = forms.CharField(max_length=50, required=True, label="Etiqueta")
 
-    # def __init__(self, *args, **kwargs):
-    #     super(ProductSelectionForm, self).__init__(*args, **kwargs)
-    #     for product in self.fields['products'].queryset:
-    #         self.fields[f'product_{product.id}'] = forms.BooleanField(
-    #             label=product.name,
-    #             required=False,
-    #             widget=forms.CheckboxInput(attrs={'data-price': product.price}),
-    #         )
+class ProductSelectionForm(forms.ModelForm):
+    class Meta:
+        model = Kit
+        fields = ['label']
+
+    def __init__(self, *args, **kwargs):
+        super(ProductSelectionForm, self).__init__(*args, **kwargs)
+        all_products = Product.objects.all()
+
+        for product in all_products:
+            self.fields[f'product_{product.id}'] = forms.BooleanField(
+                label=product.name,
+                required=False,
+                widget=forms.CheckboxInput(attrs={'data-price': product.price, 'class': 'product-checkbox'}),
+            )
