@@ -50,23 +50,24 @@
             margin-bottom: 20px;
         }
     </style>    
-    <div style="margin: 10px;" class="center-content">
+    <div style="margin: 10px;" class="center-content" display="flex">
         {% if user.is_authenticated %}
         <form id="products-form" method="post">
             {% csrf_token %}
             <table>
                 {{ form.as_p }}
             </table>            
-            <div class="center-content">
-                <input type="submit" value="Criar" class="btn btn-primary center-content" style="margin: 5px;">
-            </div>                     
+                                 
         </form>
         {% endif %}
+        <div style="margin: 10px;" class="center-content">            
+            <div><a id="total-value" class=" btn buttons-container center-content">0,00</a></div>                       
+        </div>     
     </div>
-    <div style="margin: 10px;" class="center-content">
-        <a class="btn-primary center-content">Valor Total do kit: R$ </a>
-        <a id="total-value" class=" btn buttons-container center-content">0,00</a>
+    <div class="center-content">
+        <input type="submit" value="Criar" class="btn btn-primary center-content" style="margin: 5px;">
     </div>
+    
     <script>
         // Função para construir o array JS no carregamento da página
         document.addEventListener('DOMContentLoaded', function() {

@@ -33,5 +33,8 @@ class Kit(models.Model):
     label = models.CharField(max_length=50)
     history = AuditlogHistoryField()
 
+    class Meta:
+        ordering = ['label']
+
 auditlog.register(Product)
 auditlog.register(Kit)

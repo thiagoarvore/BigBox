@@ -16,15 +16,22 @@
             left: 0;
         }
     </style>
-    <div style="margin: 10px;" class="center-content">
-        {% if kits %}
-            <table overflow-x="auto" overflow-y="auto" margin="auto" width="80%" class="table table-produto">
+    <div>
+        <form method="GET" action="{% url 'kit_list' %}" class="center-content" style="margin: 10px;">
+            <input type="text" name="search" placeholder="Buscar kit...">
+            <button type="submit">Buscar</button>
+        </form>
+    </div>    
+    <div style="margin: 10px; overflow: auto; max-height: 300px;" class="center-content">
+        <div style=" width: 80%; margin: auto; position: relative;">
+            {% if kits %}
+            <table  style="width: 90%" class="table-produto table-striped">
                 <thead>
                     <th width="50%">Kit</th>                    
                     <th width="25%">Custo</th>
                     <th width="25%">Lucro</th>
                 </thead>
-                <tbody>
+                <tbody class="table-group-divider">
                     {% for kit in kits %}                        
                         <tr>
                             <td><a href="{% url 'kit_detail' pk=kit.pk %}">{{ kit.label }} </a></td>                            
@@ -37,5 +44,6 @@
         {% else %}     
             <h1>Nenhum kit cadastrado</h1>
         {% endif %}
+        </div>        
     </div>
 {% endblock %}

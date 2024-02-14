@@ -99,6 +99,13 @@ class KitListView(ListView):
     template_name = 'kit_list.html'
     context_object_name = 'kits'
 
+    def get_queryset(self):
+        queryset = super().get_queryset().order_by('label')
+        search = self.request.GET.get('search')
+        if search:
+            queryset = queryset.filter(model__icontains=search)
+        return queryset
+
 @method_decorator(login_required(login_url='login'), name='dispatch')
 class KitDetailView(DetailView):
     model = Kit
@@ -125,6 +132,7 @@ def create_kit(request):
                     selected_products.append(product)                      
             price = 27.99
             cost = sum(product.price for product in selected_products) + 1.50 + (price*6/100)
+            print(cost)
             profit = round(price-cost, 2)
             label = form.cleaned_data.get('label', '')
             
