@@ -3,14 +3,14 @@ from auditlog.registry import auditlog
 from auditlog.models import AuditlogHistoryField
 
 
-
 class Category(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
 
     def __str__(self):
         return self.name
-    
+
+
 class Product(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
@@ -26,6 +26,7 @@ class Product(models.Model):
     def __str__(self):
         return f'{self.name} R$ {str(self.price)}'
 
+
 class Kit(models.Model):
     id = models.AutoField(primary_key=True)
     content = models.ManyToManyField(Product, related_name='kit_content')
@@ -37,6 +38,7 @@ class Kit(models.Model):
 
     class Meta:
         ordering = ['label']
+
 
 auditlog.register(Product)
 auditlog.register(Kit)

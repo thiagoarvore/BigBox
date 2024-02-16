@@ -1,11 +1,12 @@
-from django import forms 
-from bigbox.models import Category, Product, Kit, Category
+from django import forms
+from bigbox.models import Category, Product, Kit
 
 
 class CategoryModelForm(forms.ModelForm):
     class Meta:
         model = Category
         fields = '__all__'
+
 
 class ProductModelForm(forms.ModelForm):
     class Meta:
@@ -21,11 +22,13 @@ class ProductModelForm(forms.ModelForm):
         if len(str(price).split('.')[-1]) > 2:
             raise forms.ValidationError("O preço deve ter no máximo duas casas decimais.")
         return price
-   
+
+
 class KitModelForm(forms.ModelForm):
     class Meta:
         model = Kit
-        fields = '__all__'    
+        fields = '__all__'
+
 
 class ProductSelectionForm(forms.ModelForm):
     class Meta:

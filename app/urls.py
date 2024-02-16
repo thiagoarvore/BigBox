@@ -6,7 +6,7 @@ from bigbox.views import KitDetailView, ProductsListView, Test, ProductDetailVie
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),    
+    path('admin/', admin.site.urls),
     path('login/', login_view, name='login'),
     path('logout', RedirectView.as_view(url=reverse_lazy('login')), name='redirect_to_login'),
     path('', RedirectView.as_view(url=reverse_lazy('login')), name='redirect_to_login'),
@@ -22,5 +22,5 @@ urlpatterns = [
     path('kit/<int:pk>', KitDetailView.as_view(), name='kit_detail'),
     path('kit/<int:pk>/delete/', KitDeleteView.as_view(), name='kit_delete'),
     path('kit/<int:pk>/create_identical/', create_identical_kit, name='create_identical_kit'),
-    path('new_category/', CategoryCreateView.as_view(), name='new_category'), 
+    path('new_category/', CategoryCreateView.as_view(), name='new_category'),
 ]

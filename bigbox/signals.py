@@ -9,5 +9,3 @@ def kit_post_save(sender, instance, action, **kwargs):
         for product in instance.content.all():
             product.amount -= 1
             product.save()
-
-            
