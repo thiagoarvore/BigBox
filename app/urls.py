@@ -5,7 +5,6 @@ from accounts.views import login_view
 from bigbox.views import KitDetailView, ProductsListView, Test, ProductDetailView, ProductCreateView, ProductUpdateView, ProductDeleteView, ProductLogListView, KitListView, create_kit, KitDeleteView, create_identical_kit, CategoryCreateView
 
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),    
     path('login/', login_view, name='login'),

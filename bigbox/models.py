@@ -1,7 +1,9 @@
 from django.db import models
 from auditlog.registry import auditlog
 from auditlog.models import AuditlogHistoryField
-from django.http import HttpRequest
+
+
+
 class Category(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)

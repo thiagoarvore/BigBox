@@ -1,3 +1,4 @@
+import json
 from typing import Any
 from django.shortcuts import render, redirect, get_object_or_404 
 from bigbox.models import Category, Product, Kit
@@ -6,12 +7,9 @@ from django.views.generic import ListView, CreateView, DetailView, DeleteView, U
 from django.urls import reverse_lazy, reverse
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from bigbox.forms import ProductModelForm, KitModelForm, ProductSelectionForm, CategoryModelForm
-from bigbox import models
-import json
-from datetime import datetime
-from random import randint
+
 
 @method_decorator(login_required(login_url='login'), name='dispatch')
 class CategoryCreateView(CreateView):
@@ -34,6 +32,7 @@ class ProductsListView(ListView):
         return queryset
     
 class Test(View):
+
     def get(self, request, *args, **kwargs):
         return render(template_name='test.html', request=request)
 
@@ -118,7 +117,6 @@ class KitDetailView(DetailView):
         return context
 
 def create_kit(request):
-    total_cost = 0
     allproducts = Product.objects.all()
     if request.method == 'POST':
         form = ProductSelectionForm(request.POST or None)
@@ -132,7 +130,6 @@ def create_kit(request):
                     selected_products.append(product)                      
             price = 27.99
             cost = sum(product.price for product in selected_products) + 1.50 + (price*6/100)
-            print(cost)
             profit = round(price-cost, 2)
             label = form.cleaned_data.get('label', '')
             
@@ -144,15 +141,12 @@ def create_kit(request):
             )
             kit.content.set(selected_products)
             
-            for product in selected_products:
-                total_cost += product.price
             return redirect('kit_list')
     else:
         form = ProductSelectionForm() 
         
     context = {
                 'form': form,
-                'kit_price': total_cost,
                 'allproducts': allproducts,
             }    
     return render(request, 'new_kit.html', context)
@@ -167,8 +161,7 @@ class KitDeleteView(DeleteView):
         return reverse_lazy('kit_list')
 
 def create_identical_kit(request, pk):
-    original_kit = get_object_or_404(Kit, pk=pk)
-    
+    original_kit = get_object_or_404(Kit, pk=pk)    
     new_kit = Kit.objects.create(
         cost=original_kit.cost,
         price=original_kit.price,

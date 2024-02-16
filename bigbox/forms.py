@@ -1,6 +1,7 @@
 from django import forms 
 from bigbox.models import Category, Product, Kit, Category
 
+
 class CategoryModelForm(forms.ModelForm):
     class Meta:
         model = Category
@@ -30,6 +31,12 @@ class ProductSelectionForm(forms.ModelForm):
     class Meta:
         model = Kit
         fields = ['label']
+
+    # product_filter = forms.CharField(
+    #     label='Filtrar produtos',
+    #     required=False,
+    #     widget=forms.TextInput(attrs={'class': 'product-filter'}),
+    # )
 
     def __init__(self, *args, **kwargs):
         super(ProductSelectionForm, self).__init__(*args, **kwargs)
