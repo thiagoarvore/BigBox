@@ -1,4 +1,5 @@
 import json
+from datetime import datetime
 from django.shortcuts import render, redirect, get_object_or_404
 from bigbox.models import Category, Product, Kit
 from django.views import View
@@ -8,6 +9,7 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from bigbox.forms import ProductModelForm, KitModelForm, ProductSelectionForm, CategoryModelForm
+
 
 
 @method_decorator(login_required(login_url='login'), name='dispatch')
@@ -23,6 +25,7 @@ class ProductsListView(ListView):
     model = Product
     template_name = 'products_list.html'
     context_object_name = 'products'
+    paginate_by = 20
 
     def get_queryset(self):
         queryset = super().get_queryset().order_by('name')
@@ -103,12 +106,14 @@ class KitListView(ListView):
     model = Kit
     template_name = 'kit_list.html'
     context_object_name = 'kits'
+    paginate_by = 20
+    ordering = ['label', 'created_at']
 
     def get_queryset(self):
         queryset = super().get_queryset().order_by('label')
         search = self.request.GET.get('search')
         if search:
-            queryset = queryset.filter(model__icontains=search)
+            queryset = queryset.filter(label__icontains=search)
         return queryset
 
 
@@ -171,12 +176,14 @@ class KitDeleteView(DeleteView):
 
 
 def create_identical_kit(request, pk):
+    actual_date_time = datetime.now()
     original_kit = get_object_or_404(Kit, pk=pk)
     new_kit = Kit.objects.create(
         cost=original_kit.cost,
         price=original_kit.price,
         profit=original_kit.profit,
-        label=original_kit.label
+        label=original_kit.label,
+        created_at=actual_date_time
     )
     new_kit.content.set(original_kit.content.all())
 

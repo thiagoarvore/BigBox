@@ -34,10 +34,11 @@ class Kit(models.Model):
     price = models.FloatField()
     profit = models.FloatField()
     label = models.CharField(max_length=50)
+    created_at = models.DateTimeField(auto_now_add=True)
     history = AuditlogHistoryField()
 
     class Meta:
-        ordering = ['label']
+        ordering = ['label', '-created_at']
 
 
 auditlog.register(Product)

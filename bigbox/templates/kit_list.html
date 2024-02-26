@@ -21,23 +21,42 @@
             <input type="text" name="search" placeholder="Buscar kit...">
             <button type="submit">Buscar</button>
         </form>
+    </div>
+    <div class="pagination center-content">
+        <span class="step-links" style="display: flex; margin: 5px; width: 80%;">
+            {% if page_obj.has_previous %}
+                <a href="?page=1" class="btn btn-primary" role="button" style="margin: 5px; margin-right: 5px;">&laquo; Primeira página</a>
+                <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-primary" role="button" style="margin: 5px; margin-right: 5px;">Anterior</a>
+            {% endif %}
+    
+            <span class="current justify-content-center bg" style="margin: 5px;" width="300px">
+                Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
+            </span>
+    
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}" class="btn btn-primary" role="button" style="margin: 5px;">Próxima</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}" class="btn btn-primary" role="button" style="margin: 5px;">Última Página &raquo;</a>
+            {% endif %}
+        </span>
     </div>    
     <div style="margin: 10px; overflow: auto; max-height: 300px;" class="center-content">
-        <div style=" width: 80%; margin: auto; position: relative;">
+        <div class="center-content" style=" width: 80%; margin: auto; position: relative;">
             {% if kits %}
             <table  style="width: 90%" class="table-produto table-striped">
                 <thead>
-                    <th width="50%">Kit</th>                    
-                    <th width="25%">Custo</th>
-                    <th width="25%">Lucro</th>
+                    <th width="30%">Kit</th>
+                    <th width="20%">Custo</th>
+                    <th width="20%">Lucro</th>
+                    <th width="30%">Criado em</th>
                 </thead>
                 <tbody class="table-group-divider">
-                    {% for kit in kits %}                        
+                    {% for kit in page_obj %}
                         <tr>
-                            <td><a href="{% url 'kit_detail' pk=kit.pk %}">{{ kit.label }} </a></td>                            
+                            <td><a href="{% url 'kit_detail' pk=kit.pk %}">{{ kit.label }} </a></td>
                             <td>R$ {{ kit.cost|floatformat:2 }}</td>
                             <td>R${{ kit.profit|floatformat:2 }}</td>
-                        </tr>                        
+                            <td>{{ kit.created_at }}</td>
+                        </tr>
                     {% endfor %}
                 </tbody>
             </table>

@@ -14,12 +14,29 @@
             
             top: 0;
             left: 0;
-        }
+        }        
     </style>
     <form style="margin: 10px;" method="GET" action="{% url 'products_list' %}" class="center-content">
         <input type="text" name="search" placeholder="Buscar produto...">
         <button type="submit">Buscar</button>
     </form>
+    <div class="pagination center-content">
+        <span class="step-links center-content" style="display: flex; margin: 5px; width: 80%;">
+            {% if page_obj.has_previous %}
+                <a href="?page=1" class="btn btn-primary" role="button" style="margin: 5px; margin-right: 5px;">&laquo; Primeira página</a>
+                <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-primary" role="button" style="margin: 5px; margin-right: 5px;">Anterior</a>
+            {% endif %}
+    
+            <span class="current center-content bg" style="margin: 5px;">
+                Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
+            </span>
+    
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}" class="btn btn-primary" role="button" style="margin: 5px;">Próxima</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}" class="btn btn-primary" role="button" style="margin: 5px;">Última Página &raquo;</a>
+            {% endif %}
+        </span>
+    </div> 
     <div style="margin: 10px; overflow: auto; max-height: 300px;" class="center-content">
         <div style=" width: 80%; margin: auto; position: relative;">
             {% if products %}
