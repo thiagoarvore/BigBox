@@ -23,9 +23,12 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     history = AuditlogHistoryField()
 
+    class Meta:
+        ordering = ['name']
+
     def __str__(self):
         return f'{self.name} R$ {str(self.price)}'
-
+    
 
 class Kit(models.Model):
     id = models.AutoField(primary_key=True)
