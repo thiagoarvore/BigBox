@@ -25,7 +25,7 @@ class ProductsListView(ListView):
     model = Product
     template_name = 'products_list.html'
     context_object_name = 'products'
-    paginate_by = 20
+    
 
     def get_queryset(self):
         queryset = super().get_queryset().order_by('name')
@@ -106,7 +106,6 @@ class KitListView(ListView):
     model = Kit
     template_name = 'kit_list.html'
     context_object_name = 'kits'
-    paginate_by = 20
     ordering = ['label', 'created_at']
 
     def get_queryset(self):
