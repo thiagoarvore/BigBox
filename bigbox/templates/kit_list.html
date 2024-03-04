@@ -21,7 +21,7 @@
             <input type="text" name="search" placeholder="Buscar kit...">
             <button type="submit">Buscar</button>
         </form>
-    </div>   
+    </div>  
     <div style="margin: 10px; overflow: auto; max-height: 300px;" class="center-content">
         <div class="center-content" style=" width: 80%; margin: auto; position: relative;">
             {% if kits %}
@@ -33,7 +33,7 @@
                     <th width="30%">Criado em</th>
                 </thead>
                 <tbody class="table-group-divider">
-                    {% for kit in page_obj %}
+                    {% for kit in kits %}
                         <tr>
                             <td><a href="{% url 'kit_detail' pk=kit.pk %}">{{ kit.label }} </a></td>
                             <td>R$ {{ kit.cost|floatformat:2 }}</td>

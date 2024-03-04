@@ -106,7 +106,6 @@ class KitListView(ListView):
     model = Kit
     template_name = 'kit_list.html'
     context_object_name = 'kits'
-    ordering = ['label', 'created_at']
 
     def get_queryset(self):
         queryset = super().get_queryset().order_by('label')
