@@ -1,5 +1,21 @@
-This comprehensive full-stack application oversees supply management for BigBox, a prominent company situated in Guaratinguetá, Brazil.
+Sistema de Gestão de Estoque (SGE)
+Bem-vindo ao Sistema de Gestão de Estoque (SGE), um projeto desenvolvido em Django para facilitar o gerenciamento de estoque. Este README fornece informações essenciais sobre como configurar e executar o projeto em seu ambiente local.
 
-Empowering users to seamlessly add products and construct kits based on product categories, it facilitates meticulous tracking of all modifications.
+Requisitos
+Certifique-se de que você tenha os seguintes requisitos instalados em seu sistema:
 
-Hosted on AWS, this application exemplifies efficient deployment for optimal performance.
+Python (versão recomendada: 3.7 ou superior)
+Django (instalado automaticamente ao seguir as instruções abaixo)
+Outras dependências listadas no arquivo requirements.txt
+Instalação das Dependências
+Com o ambiente virtual ativado, instale as dependências do projeto usando o comando:
+
+pip install -r requirements.txt
+Rodar o projeto
+Após instalar as dependências, aplique as migrations no banco de dados com o comando:
+
+python manage.py migrate
+Agora o projeto jã pode ser inicializado com o comando:
+
+python manage.py runserver
+Após isso, o sistema estará pronto para ser acessado em: http://localhost:8000
