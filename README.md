@@ -1,8 +1,8 @@
-Sistema de Gestão de Estoque (SGE)
-Bem-vindo ao Sistema de Gestão de Estoque (SGE), um projeto desenvolvido em Django para facilitar o gerenciamento de estoque. Este README fornece informações essenciais sobre como configurar e executar o projeto em seu ambiente local.
+<h1>Sistema de Gestão de Estoque (SGE)</h1>
+<p>Bem-vindo ao Sistema de Gestão de Estoque (SGE), um projeto desenvolvido em Django para facilitar o gerenciamento de estoque. Este README fornece informações essenciais sobre como configurar e executar o projeto em seu ambiente local.</p>
 
-Requisitos
-Certifique-se de que você tenha os seguintes requisitos instalados em seu sistema:
+<h2>Requisitos</h2>
+<p>Certifique-se de que você tenha os seguintes requisitos instalados em seu sistema:</p>
 
 Python (versão recomendada: 3.7 ou superior)
 Django (instalado automaticamente ao seguir as instruções abaixo)
