@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'accounts',
     'bigbox',
     'auditlog',
+    'widget_tweaks'
 ]
 
 MIDDLEWARE = [

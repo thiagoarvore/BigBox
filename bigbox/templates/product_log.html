@@ -1,109 +1,76 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <style>
-        .product-card {
-            background-color: #F6EB13;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-            border-radius: 10px;
-            overflow: hidden;
-            text-align: center;
-            transition: all 0.3s ease;
-            max-width: 500px;
-            margin: 20px auto 0;
-            margin-bottom: 20px;
-            color: #3398CC
-            }
-        .product-card > h2 {
-            background-color: #FFCC04;
-        }
-        .btn {
-            display: inline-block;
-            background-color: #FFCC04;
-            color: #3398CC;
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s ease-in-out;
-            margin: 0 10px;
-        }
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-10">
+                <div class="card shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-center gap-3 flex-wrap">
+                            <div>
+                                <h1 class="h4 m-0">Histórico de alterações</h1>
+                                <div class="text-muted">Produto: <strong>{{ product.name }}</strong></div>
+                            </div>
+                            <a href="{% url 'product_detail' pk=product.pk %}" class="btn btn-outline-secondary">Voltar</a>
+                        </div>
 
-        .btn:hover {
-            background-color: #3398CC;
-        }
+                        <hr>
 
-        .btn-danger {
-            background-color: #d9534f;
-            text-decoration: none !important;
-        }
-
-        .btn-danger:hover {
-            background-color: #d2221c;
-        }
-        .buttons-container {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-            margin-bottom: 20px;
-        }
-        
-    </style>
-    <div class="center-content"> 
-        <h1 margin="20px 0">Histórico de alterações do produto: <strong>{{ product.name }}</strong></h1>
-    </div>
-    <div style="margin: 10px;" class="center-content">
-        <div justify="center" display="flex" align-items="center">
-            <table justify="center"  width="100%" class="table-produto table-striped" >
-                <thead>
-                    <tr>
-                        <th>Data e hora</th>
-                        <th>Usuário</th>
-                        <th>Campo alterado</th>
-                        <th>Para</th>                    
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for audit_log in audit_logs %}
-                        {% for change, value in audit_log.changes.items %}
-                                <tr>
-                                    <td>{{ audit_log.timestamp }}</td>
-                                    <td>{{ username }}</td>
-                                    <td>
-                                        {% if change == 'amount' %}
-                                            Quantidade
-                                        {% elif change == 'name' %}
-                                            Nome
-                                        {% elif change == 'category' %}
-                                            Categoria
-                                        {% elif change == 'ativo' %}
-                                            Ativo
-                                        {% elif change == 'premium' %}
-                                            Premium
-                                        {% elif change == 'price' %}
-                                            Preço
-                                        {% elif change == 'ncm' %}
-                                            NCM
-                                        {% endif %}
-                                    </td>
-                                    <td>
-                                        {% if value.1 == 'False' %}
-                                            Não
-                                        {% elif value.1 == 'True' %}
-                                            Sim
-                                        {% elif change == 'price' %}
-                                            R$ {{ value.1|floatformat:2 }}
-                                        {% else %}
-                                            {{ value.1|floatformat:2 }}
-                                        {% endif %}
-                                        
-                                    </td>                                                               
-                                </tr>
-                        {% endfor %}
-                    {% endfor %}
-                </tbody>
-            </table>
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover align-middle">
+                                <thead>
+                                    <tr>
+                                        <th>Data e hora</th>
+                                        <th>Usuário</th>
+                                        <th>Campo alterado</th>
+                                        <th>Para</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="table-group-divider">
+                                    {% for audit_log in audit_logs %}
+                                        {% for change, value in audit_log.changes.items %}
+                                            <tr>
+                                                <td>{{ audit_log.timestamp }}</td>
+                                                <td>{{ username }}</td>
+                                                <td>
+                                                    {% if change == 'amount' %}
+                                                        Quantidade
+                                                    {% elif change == 'name' %}
+                                                        Nome
+                                                    {% elif change == 'category' %}
+                                                        Categoria
+                                                    {% elif change == 'ativo' %}
+                                                        Ativo
+                                                    {% elif change == 'premium' %}
+                                                        Premium
+                                                    {% elif change == 'price' %}
+                                                        Preço
+                                                    {% elif change == 'ncm' %}
+                                                        NCM
+                                                    {% else %}
+                                                        {{ change }}
+                                                    {% endif %}
+                                                </td>
+                                                <td>
+                                                    {% if value.1 == 'False' %}
+                                                        Não
+                                                    {% elif value.1 == 'True' %}
+                                                        Sim
+                                                    {% elif change == 'price' %}
+                                                        R$ {{ value.1|floatformat:2 }}
+                                                    {% else %}
+                                                        {{ value.1|floatformat:2 }}
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-</div>   
+    </div>
 {% endblock %}

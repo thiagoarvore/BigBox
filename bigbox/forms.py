@@ -6,6 +6,9 @@ class CategoryModelForm(forms.ModelForm):
     class Meta:
         model = Category
         fields = '__all__'
+        labels = {
+            'name': 'Nome',
+        }
 
 
 class ProductModelForm(forms.ModelForm):
@@ -14,6 +17,15 @@ class ProductModelForm(forms.ModelForm):
         fields = '__all__'
         widgets = {
             'price': forms.NumberInput(attrs={'step': '0.01'}),
+        }
+        labels = {
+            'name': 'Nome',
+            'description': 'Descrição',
+            'price': 'Preço',
+            'category': 'Categoria',
+            'amount': 'Quantidade',
+            'premium': 'Premium',
+            'ncm': 'NCM',
         }
 
     def clean_price(self):
@@ -34,6 +46,13 @@ class ProductSelectionForm(forms.ModelForm):
     class Meta:
         model = Kit
         fields = ['label']
+        labels = {
+            'label': 'Etiqueta',
+            'content': 'Conteúdo',
+            'cost': 'Custo',
+            'price': 'Preço',
+            'profit': 'Lucro',
+        }
 
     # product_filter = forms.CharField(
     #     label='Filtrar produtos',

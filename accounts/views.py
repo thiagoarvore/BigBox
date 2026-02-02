@@ -4,6 +4,11 @@ from django.contrib.auth import authenticate, login, logout
 
 
 def login_view(request):
+    login_form = AuthenticationForm(request, data=request.POST or None)
+    for field in login_form.fields.values():
+        existing = field.widget.attrs.get("class", "")
+        field.widget.attrs["class"] = (existing + " form-control").strip()
+
     if request.method == "POST":
         username = request.POST["username"]
         password = request.POST['password']
@@ -11,11 +16,6 @@ def login_view(request):
         if user is not None:
             login(request, user)
             return redirect('products_list')
-        else:
-            login_form = AuthenticationForm()
-
-    else:
-        login_form = AuthenticationForm()
     return render(request, 'login.html', {'login_form': login_form})
 
 

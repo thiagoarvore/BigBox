@@ -1,78 +1,62 @@
 {% extends 'base.html' %}
 
+{% load widget_tweaks %}
+
 {% block content %}
-    <style>
-        .product-card {
-            background-color: #F6EB13;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-            border-radius: 10px;
-            overflow: hidden;
-            text-align: center;
-            transition: all 0.3s ease;
-            max-width: 500px;
-            margin: 20px auto 0;
-            margin-bottom: 20px;
-            color: #3398CC
-            }
-        .product-card > h2 {
-            background-color: #FFCC04;
-        }
-        .btn {
-            display: inline-block;
-            background-color: #FFCC04;
-            color: #3398CC;
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s ease-in-out;
-            margin: 0 10px;
-        }
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-10">
+                <div class="card shadow-sm">
+                    <div class="card-body p-4">
+                        <h1 class="h4 mb-3 text-center">Criar Kit</h1>
 
-        .btn:hover {
-            background-color: #3398CC;
-            color: #FFCC04;
-        }
+                        <form id="products-form" method="post">
+                            {% csrf_token %}
 
-        .btn-danger {
-            background-color: #d9534f;
-            text-decoration: none !important;
-        }
+                            <div class="row g-3 align-items-end">
+                                <div class="col-12 col-md-6">
+                                    <label class="form-label" for="{{ form.label.id_for_label }}">{{ form.label.label }}</label>
+                                    {% render_field form.label class+="form-control" %}
+                                    {% if form.label.errors %}
+                                        <div class="invalid-feedback d-block">{{ form.label.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <label for="id_product_filter" class="form-label">Filtrar produtos</label>
+                                    <input type="text" name="product_filter" id="id_product_filter" class="product-filter form-control" placeholder="Digite para filtrar...">
+                                </div>
+                            </div>
 
-        .btn-danger:hover {
-            background-color: #d2221c;
-        }
-        .buttons-container {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-            margin-bottom: 20px;
-        }
-    </style>
-    
-    <div style="margin: 10px" class="center-content">
-        <label for="id_product_filter" style="margin: 10px"><strong>Filtrar produtos:</strong></label>
-        <input type="text" name="product_filter" id="id_product_filter" class="product-filter">
+                            <hr>
+
+                            <div class="row justify-content-center">
+                                <div class="col-12 col-lg-10">
+                                    <div class="border rounded p-3" style="max-height: 320px; overflow: auto;">
+                                        {% if user.is_authenticated %}
+                                            {% for field in form.visible_fields %}
+                                                {% if field.name != 'label' %}
+                                                    <div class="form-check">
+                                                        {% render_field field class+="form-check-input" %}
+                                                        <label class="form-check-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                                    </div>
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-grid gap-2 mt-4">
+                                <button type="submit" class="btn btn-primary">Criar</button>
+                                <div id="total-value" class="btn btn-warning" role="button">Total: R$ 0,00</div>
+                                <a href="{% url 'kit_list' %}" class="btn btn-outline-secondary">Voltar</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <form id="products-form" method="post">        
-        {% csrf_token %}    
-        <div style="margin: 10px; overflow: auto; max-height: 300px;" class="center-content" display="flex">
-            <div style=" width: 80%; margin: auto; position: relative;">
-                {% if user.is_authenticated %}                
-                    <table>
-                        {{ form.as_table }}
-                    </table>
-                {% endif %}
-            </div> 
-        </div>
-        <div class="center-content">
-            <input type="submit" value="Criar" class="btn btn-primary center-content" style="margin: 5px;">
-        </div>
-    </form>
-    <div style="margin: 10px;" class="center-content">            
-        <div><a id="total-value" class=" btn buttons-container center-content">0,00</a></div>                       
-    </div> 
     
     
     <script>

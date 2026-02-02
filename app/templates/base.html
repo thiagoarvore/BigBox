@@ -6,30 +6,44 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   <title>{% block title %}{% endblock %}</title>
   <style>
+    :root {
+        --bb-brand: #3398CC;
+        --bb-brand-strong: #0096c7;
+        --bb-brand-hover: #33C5F4;
+        --bb-accent: #FFCC04;
+        --bb-bg: #0f141a;
+        --bb-surface: #151c24;
+        --bb-surface-2: #1b2632;
+        --bb-border: rgba(255, 255, 255, 0.12);
+        --bb-text: rgba(255, 255, 255, 0.88);
+        --bb-text-muted: rgba(255, 255, 255, 0.68);
+    }
+
     body {
         font-family: 'Open Sans', sans-serif;
-        background-color: #46A6DC;
-        color: #333;
+        background-color: var(--bb-bg);
+        color: var(--bb-text);
         margin: 0;
         padding: 0;
     }
 
     header {
-        background-color: #3398CC;
-        color: #fff;
+        background-color: var(--bb-surface);
+        color: var(--bb-text);
         text-align: center;
     }
 
     footer {
-        background-color: #3398CC;
-        color: #333;
+        background-color: var(--bb-surface);
+        color: var(--bb-text-muted);
         padding: 20px;
         text-align: center;
     }
 
     nav {
-        background-color: #0096c7;
-        color: #fff;
+        background-color: var(--bb-surface);
+        border-bottom: 1px solid var(--bb-border);
+        color: var(--bb-text);
         height: 50px;
         display: flex;
         justify-content: space-between;
@@ -48,7 +62,7 @@
     }
 
     nav ul li a {
-        color: #fff;
+        color: var(--bb-text);
         text-decoration: none;
         font-size: 16px;
         padding: 15px;
@@ -56,19 +70,21 @@
     }
 
     nav ul li a:hover {
-        background-color: #33C5F4;
+        background-color: rgba(51, 197, 244, 0.18);
+        color: var(--bb-text);
     }
 
     nav ul li.active a {
-        background-color: #666;
+        background-color: rgba(255, 204, 4, 0.16);
+        color: var(--bb-text);
     }
 
     nav ul li.active a:hover {
-        background-color: #999;
+        background-color: rgba(255, 204, 4, 0.22);
     }
     
     .table-produto {
-      border: 1px solid black;
+      border: 1px solid var(--bb-border);
       border-spacing: 0;
       border-collapse: collapse;
       text-align: center;
@@ -77,18 +93,18 @@
     }
 
     td {
-      border: 1px solid black;
+      border: 1px solid var(--bb-border);
     }
 
     thead > tr {
-      background-color: #3398CC
+      background-color: var(--bb-surface-2)
     }
     tbody> tr:nth-child(even) {
-      background-color: #ffffff;
+      background-color: var(--bb-surface);
     }
 
     tbody > tr:nth-child(odd) {
-      background-color: #c4c3c3;
+      background-color: var(--bb-surface-2);
     }
     .center-content {
       display: flex;
@@ -96,11 +112,151 @@
       align-items: center;
     }
     .bg {
-      color: #3398CC;
-      background-color: #FFCC04;
+      color: var(--bb-brand);
+      background-color: var(--bb-accent);
       padding: 6px 12px;
       align-items: center;
       display: flex;
+    }
+
+    a {
+      color: var(--bb-brand-hover);
+    }
+
+    a:hover {
+      color: var(--bb-accent);
+    }
+
+    main {
+      padding: 24px 12px;
+    }
+
+    .card,
+    .modal-content,
+    .dropdown-menu {
+      background-color: var(--bb-surface);
+      color: var(--bb-text);
+      border-color: var(--bb-border);
+    }
+
+    .card {
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .card.bb-card-centered {
+      width: 100%;
+      max-width: 440px;
+    }
+
+    .form-control,
+    .form-select {
+      background-color: var(--bb-surface-2);
+      color: var(--bb-text);
+      border-color: var(--bb-border);
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+      background-color: var(--bb-surface-2);
+      color: var(--bb-text);
+      border-color: rgba(51, 152, 204, 0.7);
+      box-shadow: 0 0 0 0.25rem rgba(51, 152, 204, 0.18);
+    }
+
+    .btn-primary {
+      background-color: var(--bb-brand);
+      border-color: var(--bb-brand);
+      color: #0b1117;
+      font-weight: 600;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--bb-brand-hover);
+      border-color: var(--bb-brand-hover);
+      color: #0b1117;
+    }
+
+    .btn-warning {
+      background-color: var(--bb-accent);
+      border-color: var(--bb-accent);
+      color: #0b1117;
+      font-weight: 600;
+    }
+
+    label {
+      color: var(--bb-text-muted);
+      margin-bottom: 6px;
+    }
+
+    input::placeholder {
+      color: rgba(255, 255, 255, 0.45);
+    }
+
+    .helptext {
+      display: block;
+      color: rgba(255, 255, 255, 0.55);
+      margin-top: 6px;
+      font-size: 0.875rem;
+    }
+
+    ul.errorlist {
+      list-style: none;
+      padding-left: 0;
+      margin: 0 0 10px 0;
+      color: #ff6b6b;
+    }
+
+    ul.errorlist li {
+      margin: 0;
+    }
+
+    form p {
+      margin-bottom: 12px;
+    }
+
+    hr {
+      border-color: var(--bb-border);
+      opacity: 1;
+    }
+
+    .table {
+      color: var(--bb-text);
+      --bs-table-bg: transparent;
+      --bs-table-color: var(--bb-text);
+      --bs-table-border-color: var(--bb-border);
+      --bs-table-striped-bg: rgba(255, 255, 255, 0.03);
+      --bs-table-striped-color: var(--bb-text);
+      --bs-table-hover-bg: rgba(255, 204, 4, 0.12);
+      --bs-table-hover-color: var(--bb-text);
+    }
+
+    .table td,
+    .table th {
+      border-color: var(--bb-border);
+    }
+
+    .table-striped > tbody > tr:nth-of-type(odd) > * {
+      color: var(--bb-text);
+      background-color: rgba(255, 255, 255, 0.03);
+    }
+
+    .table > thead {
+      background-color: var(--bb-surface-2);
+      color: var(--bb-text);
+      border-bottom: 1px solid var(--bb-border);
+    }
+
+    .table > thead > tr > th {
+      background-color: var(--bb-surface-2) !important;
+      color: var(--bb-text) !important;
+      font-weight: 600;
+      border-color: var(--bb-border);
+    }
+
+    .table-hover > tbody > tr:hover > * {
+      color: var(--bb-text);
+      background-color: rgba(255, 204, 4, 0.12);
     }
   </style>
 </head>

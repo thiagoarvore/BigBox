@@ -1,68 +1,26 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <style>
-        .product-card {
-            background-color: #F6EB13;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-            border-radius: 10px;
-            overflow: hidden;
-            text-align: center;
-            transition: all 0.3s ease;
-            max-width: 500px;
-            margin: 20px auto 0;
-            margin-bottom: 20px;
-            color: #3398CC
-            }
-        .product-card > h2 {
-            background-color: #FFCC04;
-        }
-        .btn {
-            display: inline-block;
-            background-color: #FFCC04;
-            color: #3398CC;
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s ease-in-out;
-            margin: 0 10px;
-        }
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8 col-lg-6">
+                <div class="card bb-card-centered shadow-sm">
+                    <div class="card-body p-4 text-center">
+                        <h1 class="h4 mb-2">Deletar Kit</h1>
+                        <div class="text-muted mb-3">Essa ação não pode ser desfeita.</div>
 
-        .btn:hover {
-            background-color: #3398CC;
-            color: #FFCC04;
-        }
+                        <div class="mb-4">Tem certeza que deseja deletar esse kit?</div>
 
-        .btn-danger {
-            background-color: #d9534f;
-            text-decoration: none !important;
-        }
-
-        .btn-danger:hover {
-            background-color: #d2221c;
-        }
-        .buttons-container {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-            margin-bottom: 20px;
-        }
-    </style>    
-    <div class="product-card">
-        <div class="card-header">
-            <h1 class="card-title">Deletar Kit</h1>
-        </div>
-        <div class="card-body">
-            <p>Tem certeza que deseja deletar esse kit?</p>
-            <form method="post">
-                {% csrf_token %}
-                <div class="buttons-container">
-                    <button type="submit" class="btn btn-danger">Deletar Kit</button>
-                    <a href="{% url 'kit_list' %}" class="btn btn-primary">Cancelar</a>
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-danger">Deletar Kit</button>
+                                <a href="{% url 'kit_detail' pk=object.pk %}" class="btn btn-outline-secondary">Cancelar</a>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
 {% endblock %}

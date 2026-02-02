@@ -1,51 +1,64 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <style>
-        tr > td:hover {
-            background-color: #FFCC04;
-        }
-        a {
-            display: block;
-            width: 100%;
-            height: 100%;
-            text-decoration: none; /* Remove o sublinhado padrão de links */
-            color: inherit; /* Herda a cor do texto padrão da célula */
-            
-            top: 0;
-            left: 0;
-        }
-    </style>
-    <div>
-        <form method="GET" action="{% url 'kit_list' %}" class="center-content" style="margin: 10px;">
-            <input type="text" name="search" placeholder="Buscar kit...">
-            <button type="submit">Buscar</button>
-        </form>
-    </div>  
-    <div style="margin: 10px; overflow: auto; max-height: 300px;" class="center-content">
-        <div class="center-content" style=" width: 80%; margin: auto; position: relative;">
-            {% if kits %}
-            <table  style="width: 90%" class="table-produto table-striped">
-                <thead>
-                    <th width="30%">Kit</th>
-                    <th width="20%">Custo</th>
-                    <th width="20%">Lucro</th>
-                    <th width="30%">Criado em</th>
-                </thead>
-                <tbody class="table-group-divider">
-                    {% for kit in kits %}
-                        <tr>
-                            <td><a href="{% url 'kit_detail' pk=kit.pk %}">{{ kit.label }} </a></td>
-                            <td>R$ {{ kit.cost|floatformat:2 }}</td>
-                            <td>R${{ kit.profit|floatformat:2 }}</td>
-                            <td>{{ kit.created_at }}</td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        {% else %}     
-            <h1>Nenhum kit cadastrado</h1>
-        {% endif %}
-        </div>        
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-10">
+                <div class="card shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-center gap-3 flex-wrap">
+                            <h1 class="h4 m-0">Kits</h1>
+
+                            <form method="GET" action="{% url 'kit_list' %}" class="d-flex gap-2">
+                                <input class="form-control" type="text" name="search" value="{{ request.GET.search|default:'' }}" placeholder="Buscar kit...">
+                                <button class="btn btn-primary" type="submit">Buscar</button>
+                            </form>
+                        </div>
+
+                        <hr>
+
+                        {% if kits %}
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover align-middle">
+                                    <thead>
+                                        <tr>
+                                            <th>Kit</th>
+                                            <th>Custo</th>
+                                            <th>Lucro</th>
+                                            <th>Criado em</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-group-divider">
+                                        {% for kit in kits %}
+                                            <tr>
+                                                <td>
+                                                    <a href="{% url 'kit_detail' pk=kit.pk %}" class="text-decoration-none">{{ kit.label }}</a>
+                                                </td>
+                                                <td>R$ {{ kit.cost|floatformat:2 }}</td>
+                                                <td>R$ {{ kit.profit|floatformat:2 }}</td>
+                                                <td>{{ kit.created_at|date:"d/m/Y H:i" }}</td>
+                                                <td>
+                                                <form method="post" action="{% url 'create_identical_kit' pk=kit.pk %}">
+                                                    {% csrf_token %}
+                                                    <button type="submit" class="btn btn-primary w-100">Criar Kit Idêntico</button>
+                                                </form>                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                                {% with filter_params=request.GET.urlencode %}
+                                    {% include 'partials/_pagination.html' %}
+                                {% endwith %}
+                            </div>
+                        {% else %}
+                            <div class="text-center py-4">
+                                <h2 class="h6 m-0">Nenhum kit cadastrado</h2>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}

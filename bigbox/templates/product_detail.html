@@ -1,77 +1,74 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <style>
-        .product-card {
-            background-color: #F6EB13;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-            border-radius: 10px;
-            overflow: hidden;
-            text-align: center;
-            transition: all 0.3s ease;
-            max-width: 500px;
-            margin: 20px auto 0;
-            margin-bottom: 20px;
-            color: #3398CC
-            }
-        .product-card > h2 {
-            background-color: #FFCC04;
-        }
-        .btn {
-            display: inline-block;
-            background-color: #FFCC04;
-            color: #3398CC;
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s ease-in-out;
-            margin: 0 10px;
-        }
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-8">
+                <div class="card bb-card-centered shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="text-center">
+                            <h1 class="h4 mb-1">{{ object.name }}</h1>
+                            <div class="text-muted">Detalhes do produto</div>
+                        </div>
 
-        .btn:hover {
-            background-color: #3398CC;
-            color: #FFCC04;
-        }
+                        <hr>
 
-        .btn-danger {
-            background-color: #d9534f;
-            text-decoration: none !important;
-        }
+                        <div class="table-responsive">
+                            <table class="table align-middle mb-0">
+                                <tbody>
+                                    <tr>
+                                        <th scope="row" class="text-muted">Categoria</th>
+                                        <td>{{ object.category }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="text-muted">Qtd em estoque</th>
+                                        <td>{{ object.amount }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="text-muted">Preço</th>
+                                        <td>R${{ object.price|floatformat:2 }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="text-muted">Ativo</th>
+                                        <td>
+                                            {% if object.ativo %}
+                                                Sim
+                                            {% else %}
+                                                Não
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="text-muted">Premium</th>
+                                        <td>
+                                            {% if object.premium %}
+                                                Sim
+                                            {% else %}
+                                                Não
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="text-muted">NCM</th>
+                                        <td>{{ object.ncm }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="text-muted">Cadastrado em</th>
+                                        <td>{{ object.created_at }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
 
-        .btn-danger:hover {
-            background-color: #d2221c;
-        }
-        .buttons-container {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-            margin-bottom: 20px;
-        }
-    </style>    
-    <div class="product-card">    
-        <h2>{{ object.name }}</h2>
-        <p><strong>Categoria: </strong>{{ object.category }}</p>
-        <p><strong>Qtd em estoque: </strong>{{ object.amount }}</p>
-        <p><strong>Preço: </strong>R${{ object.price|floatformat:2 }}</p>
-        <p><strong>Ativo: </strong>
-            {% if object.ativo %}
-                Sim
-            {% else %}
-                Não
-            {% endif %}</p>
-        <p><strong>Premium: </strong>
-            {% if object.premium %}
-                Sim
-            {% else %}
-                Não
-            {% endif %}</p>
-        <p><strong>NCM: </strong>{{ object.ncm }}</p>
-        <p><strong>Cadastrado em: </strong>{{ object.created_at }}</p>
-    </div>
-    <div class="buttons-container">
-        <a href="{% url 'product_update' pk=object.pk %}" class="btn btn-primary"><strong>Editar Produto</strong></a>
-        <a href="{% url 'product_log' pk=object.pk %}" class="btn btn-primary"><strong>Histórico de Alterações</strong></a>
+                        <div class="d-grid gap-2 mt-4">
+                            <a href="{% url 'product_update' pk=object.pk %}" class="btn btn-primary">Editar Produto</a>
+                            <a href="{% url 'product_log' pk=object.pk %}" class="btn btn-outline-secondary">Histórico de Alterações</a>
+                            <a href="{% url 'product_delete' pk=object.pk %}" class="btn btn-outline-danger">Deletar</a>
+                            <a href="{% url 'products_list' %}" class="btn btn-outline-secondary">Voltar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}

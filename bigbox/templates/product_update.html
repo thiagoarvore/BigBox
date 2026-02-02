@@ -1,72 +1,58 @@
 {% extends 'base.html' %}
 
+{% load widget_tweaks %}
+
 {% block content %}
-    <style>
-        .product-card {
-            background-color: #F6EB13;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-            border-radius: 10px;
-            overflow: hidden;
-            text-align: center;
-            transition: all 0.3s ease;
-            max-width: 500px;
-            margin: 20px auto 0;
-            margin-bottom: 20px;
-            color: #3398CC
-            }
-        .product-card > h2 {
-            background-color: #FFCC04;
-        }
-        .btn {
-            display: inline-block;
-            background-color: #FFCC04;
-            color: #3398CC;
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s ease-in-out;
-            margin: 0 10px;
-        }
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-8">
+                <div class="card bb-card-centered shadow-sm">
+                    <div class="card-body p-4">
+                        <h1 class="h4 mb-3 text-center">Editar Produto</h1>
 
-        .btn:hover {
-            background-color: #3398CC;
-            color: #FFCC04;
-        }
+                        <form method="post">
+                            {% csrf_token %}
 
-        .btn-danger {
-            background-color: #d9534f;
-            text-decoration: none !important;
-        }
+                            {% if form.non_field_errors %}
+                                <div class="alert alert-danger" role="alert">{{ form.non_field_errors }}</div>
+                            {% endif %}
 
-        .btn-danger:hover {
-            background-color: #d2221c;
-        }
-        .buttons-container {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-            margin-bottom: 20px;
-        }
-    </style>    
-    <div >
-        <form method="post" style="margin: 10px;" class="center-content">
-            {% csrf_token %}
-            <table>
-                {{ form.as_table }}
-            </table>
-            <div style="margin: 10px;" class="center-content">
-                <div>
-                    <div style="margin: 10px;" class="center-content">
-                        <input type="submit" value="Salvar Alterações" class="btn btn-primary">
+                            {% for field in form.visible_fields %}
+                                {% if field.field.widget.input_type == 'checkbox' %}
+                                    <div class="form-check mb-3">
+                                        {% render_field field class+="form-check-input" %}
+                                        <label class="form-check-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                        {% if field.errors %}
+                                            <div class="invalid-feedback d-block">{{ field.errors }}</div>
+                                        {% endif %}
+                                    </div>
+                                {% else %}
+                                    <div class="mb-3">
+                                        <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                        {% if field.field.widget.input_type == 'select' %}
+                                            {% render_field field class+="form-select" %}
+                                        {% else %}
+                                            {% render_field field class+="form-control" %}
+                                        {% endif %}
+                                        {% if field.help_text %}
+                                            <div class="helptext">{{ field.help_text }}</div>
+                                        {% endif %}
+                                        {% if field.errors %}
+                                            <div class="invalid-feedback d-block">{{ field.errors }}</div>
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+
+                            <div class="d-grid gap-2 mt-4">
+                                <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+                                <a href="{% url 'product_delete' pk=object.pk %}" class="btn btn-outline-danger">Deletar</a>
+                                <a href="{% url 'product_detail' pk=object.pk %}" class="btn btn-outline-secondary">Cancelar</a>
+                            </div>
+                        </form>
                     </div>
-                    <div style="margin: 10px;" class="center-content">
-                        <a class="btn btn-primary">Deletar</a>
-                        <a href="{% url 'products_list' %}" class="btn btn-primary">Cancelar</a>
-                    </div>                    
-                </div>                
-            </div>            
-        </form>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}

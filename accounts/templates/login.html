@@ -1,14 +1,53 @@
 {% extends 'base.html' %}
 
+{% load widget_tweaks %}
+
 {% block content %}
-    <div style="margin: 10px;" class="product-card center-content">
-        <form method="post" class="center-content">
-            {% csrf_token %}
-            <table class="center-content">
-                {{ login_form.as_p }}
-            </table>
-            <input style="margin: 10px;" type="submit" value="Entrar" class="btn btn-primary center-content">
-        </form>
+    <div class="container">
+        <div class="row justify-content-center text-center">
+            <div class="col-12 col-sm-10 col-md-6 col-lg-4">
+                <div class="card bb-card-centered shadow-sm">
+                    <div class="card-header">
+                        <h1 class="h1 mb-3">BigBox</h1>
+                    </div>
+                    <div class="card-body p-4">                        
+                        <form method="post">
+                            {% csrf_token %}
+
+                            {% if login_form.non_field_errors %}
+                                <div class="alert alert-danger" role="alert">
+                                    {{ login_form.non_field_errors }}
+                                </div>
+                            {% endif %}
+
+                            <div class="mb-3">
+                                <label class="form-label" for="{{ login_form.username.id_for_label }}">Usuário</label>
+                                {% render_field login_form.username class+="form-control" autocomplete="username" %}
+                                {% if login_form.username.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ login_form.username.errors }}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <div class="mb-2">
+                                <label class="form-label" for="{{ login_form.password.id_for_label }}">Senha</label>
+                                {% render_field login_form.password class+="form-control" autocomplete="current-password" %}
+                                {% if login_form.password.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ login_form.password.errors }}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <div class="d-grid mt-3">
+                                <button type="submit" class="btn btn-primary">Entrar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 {% endblock %}

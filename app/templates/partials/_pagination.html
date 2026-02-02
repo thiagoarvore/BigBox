@@ -1,0 +1,22 @@
+<style>
+    .btn-fixed-width {
+        width: 100px;  /* Defina o tamanho fixo desejado */
+    }
+</style>
+<div class="pagination d-flex justify-content-center my-3">
+    {% if is_paginated %}
+        {% if page_obj.has_previous %}
+            <a class="btn btn-secondary btn-fixed-width mx-1" href="?page=1{% if request.GET %}&{{ request.GET.urlencode|safe|cut:'page=' }}{% endif %}">&laquo; primeira</a>
+            <a class="btn btn-secondary btn-fixed-width mx-1" href="?page={{ page_obj.previous_page_number }}{% if request.GET %}&{{ request.GET.urlencode|safe|cut:'page=' }}{% endif %}">anterior</a>
+        {% endif %}
+
+        <span class="current mx-3 align-self-center">
+            Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a class="btn btn-secondary btn-fixed-width mx-1" href="?page={{ page_obj.next_page_number }}{% if request.GET %}&{{ request.GET.urlencode|safe|cut:'page=' }}{% endif %}">próxima</a>
+            <a class="btn btn-secondary btn-fixed-width mx-1" href="?page={{ page_obj.paginator.num_pages }}{% if request.GET %}&{{ request.GET.urlencode|safe|cut:'page=' }}{% endif %}">última &raquo;</a>
+        {% endif %}
+    {% endif %}
+</div>

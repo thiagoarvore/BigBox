@@ -1,7 +1,7 @@
 from django.db import models
 from auditlog.registry import auditlog
 from auditlog.models import AuditlogHistoryField
-
+from django.utils import timezone
 
 class Category(models.Model):
     id = models.AutoField(primary_key=True)
