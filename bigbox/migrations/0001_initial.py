@@ -8,29 +8,35 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Category',
+            name="Category",
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False)),
-                ('name', models.CharField(max_length=100)),
+                ("id", models.AutoField(primary_key=True, serialize=False)),
+                ("name", models.CharField(max_length=100)),
             ],
         ),
         migrations.CreateModel(
-            name='Product',
+            name="Product",
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False)),
-                ('name', models.CharField(max_length=100)),
-                ('ativo', models.BooleanField()),
-                ('amount', models.IntegerField()),
-                ('premium', models.BooleanField()),
-                ('price', models.DecimalField(decimal_places=2, max_digits=20)),
-                ('ncm', models.IntegerField()),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('category', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='product_category', to='bigbox.category')),
+                ("id", models.AutoField(primary_key=True, serialize=False)),
+                ("name", models.CharField(max_length=100)),
+                ("ativo", models.BooleanField()),
+                ("amount", models.IntegerField()),
+                ("premium", models.BooleanField()),
+                ("price", models.DecimalField(decimal_places=2, max_digits=20)),
+                ("ncm", models.IntegerField()),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                (
+                    "category",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.PROTECT,
+                        related_name="product_category",
+                        to="bigbox.category",
+                    ),
+                ),
             ],
         ),
     ]

@@ -6,28 +6,28 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('bigbox', '0004_remove_kit_content_kit_content'),
+        ("bigbox", "0004_remove_kit_content_kit_content"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='kit',
-            name='cost',
+            model_name="kit",
+            name="cost",
             field=models.FloatField(),
         ),
         migrations.AlterField(
-            model_name='kit',
-            name='price',
+            model_name="kit",
+            name="price",
             field=models.FloatField(),
         ),
         migrations.AlterField(
-            model_name='kit',
-            name='profit',
+            model_name="kit",
+            name="profit",
             field=models.FloatField(),
         ),
         migrations.AlterField(
-            model_name='product',
-            name='price',
+            model_name="product",
+            name="price",
             field=models.FloatField(),
         ),
     ]

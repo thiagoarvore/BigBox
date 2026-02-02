@@ -1,6 +1,6 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import AuthenticationForm
+from django.shortcuts import redirect, render
 
 
 def login_view(request):
@@ -11,14 +11,14 @@ def login_view(request):
 
     if request.method == "POST":
         username = request.POST["username"]
-        password = request.POST['password']
+        password = request.POST["password"]
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('products_list')
-    return render(request, 'login.html', {'login_form': login_form})
+            return redirect("dashboard")
+    return render(request, "login.html", {"login_form": login_form})
 
 
 def logout_view(request):
     logout(request)
-    return redirect('login')
+    return redirect("login")

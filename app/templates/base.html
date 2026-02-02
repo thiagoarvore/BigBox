@@ -27,6 +27,10 @@
         padding: 0;
     }
 
+    .text-muted {
+      color: var(--bb-text-muted) !important;
+    }
+
     header {
         background-color: var(--bb-surface);
         color: var(--bb-text);
@@ -139,6 +143,74 @@
       border-color: var(--bb-border);
     }
 
+    .bb-kpi-title {
+      color: var(--bb-text-muted);
+      font-size: 0.82rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .bb-kpi-sub {
+      color: rgba(255, 255, 255, 0.58);
+      font-size: 0.875rem;
+    }
+
+    .bb-kpi-value {
+      color: rgba(255, 255, 255, 0.92);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .bb-card-hover {
+      transition: transform 120ms ease, box-shadow 120ms ease, border-color 120ms ease;
+    }
+
+    .bb-card-hover:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.28);
+      border-color: rgba(255, 204, 4, 0.22);
+    }
+
+    .bb-dashboard-card {
+      background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.03) 0%,
+        rgba(255, 255, 255, 0.015) 100%
+      );
+      border: 1px solid rgba(51, 152, 204, 0.22);
+      min-height: 210px;
+    }
+
+    .bb-dashboard-card--wide {
+      min-height: 320px;
+    }
+
+    .bb-dashboard-card .card-body {
+      padding: 18px;
+    }
+
+    .bb-kpi-title {
+      font-size: 0.78rem;
+    }
+
+    .bb-kpi-sub {
+      font-size: 0.82rem;
+    }
+
+    .bb-kpi-value {
+      font-size: 1.55rem;
+      line-height: 1.2;
+    }
+
+    .bb-kpi-value.bb-kpi-value--xl {
+      font-size: 1.95rem;
+    }
+
+    .bb-card-hover.bb-dashboard-card:hover {
+      border-color: rgba(51, 197, 244, 0.45);
+      box-shadow: 0 12px 34px rgba(0, 0, 0, 0.32);
+    }
+
     .card {
       margin-left: auto;
       margin-right: auto;
@@ -182,6 +254,22 @@
       border-color: var(--bb-accent);
       color: #0b1117;
       font-weight: 600;
+    }
+
+    .btn-outline-secondary {
+      color: var(--bb-brand-hover) !important;
+      border-color: rgba(51, 152, 204, 0.65) !important;
+    }
+
+    .btn-outline-secondary:hover,
+    .btn-outline-secondary:active {
+      color: #0b1117 !important;
+      background-color: rgba(51, 197, 244, 0.85) !important;
+      border-color: rgba(51, 197, 244, 0.85) !important;
+    }
+
+    .btn-outline-secondary:focus {
+      box-shadow: 0 0 0 0.25rem rgba(51, 152, 204, 0.18) !important;
     }
 
     label {
@@ -266,12 +354,13 @@
       <ul>
         {% if user.is_authenticated %}
             <li>Bem-vindo, {{ user.username }}</li> 
+            <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
             <li><a href="{% url 'products_list' %}">Produtos</a></li>
             <li><a href="{% url 'new_category' %}">Criar categoria</a>
             <li><a href="{% url 'new_product' %}">Cadastrar Produto</a></li>
             <li><a href="{% url 'kit_list' %}">Kits</a></li>
             <li><a href="{% url 'new_kit' %}">Criar Kit</a></li>
-            <li><a href="{% url 'login' %}">Sair</a></li>
+            <li><a href="{% url 'logout' %}">Sair</a></li>
         {% endif %}
       </ul>
     </nav>

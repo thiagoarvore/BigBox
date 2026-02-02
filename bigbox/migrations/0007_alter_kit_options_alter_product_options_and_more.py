@@ -7,22 +7,24 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('bigbox', '0006_alter_kit_options_alter_kit_label'),
+        ("bigbox", "0006_alter_kit_options_alter_kit_label"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='kit',
-            options={'ordering': ['label', '-created_at']},
+            name="kit",
+            options={"ordering": ["label", "-created_at"]},
         ),
         migrations.AlterModelOptions(
-            name='product',
-            options={'ordering': ['name']},
+            name="product",
+            options={"ordering": ["name"]},
         ),
         migrations.AddField(
-            model_name='kit',
-            name='created_at',
-            field=models.DateTimeField(auto_now_add=True, default=django.utils.timezone.now),
+            model_name="kit",
+            name="created_at",
+            field=models.DateTimeField(
+                auto_now_add=True, default=django.utils.timezone.now
+            ),
             preserve_default=False,
         ),
     ]

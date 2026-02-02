@@ -1,7 +1,8 @@
-from django.test import TestCase, Client
-from django.urls import reverse
 from django.contrib.auth.models import User
-from .models import Category, Product, Kit
+from django.test import Client, TestCase
+from django.urls import reverse
+
+from .models import Category, Kit, Product
 
 
 class ModelTests(TestCase):

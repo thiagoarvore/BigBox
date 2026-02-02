@@ -7,18 +7,25 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('bigbox', '0001_initial'),
+        ("bigbox", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Kit',
+            name="Kit",
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False)),
-                ('cost', models.DecimalField(decimal_places=2, max_digits=20)),
-                ('label', models.CharField(max_length=200)),
-                ('profit', models.DecimalField(decimal_places=2, max_digits=20)),
-                ('content', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='kit_content', to='bigbox.product')),
+                ("id", models.AutoField(primary_key=True, serialize=False)),
+                ("cost", models.DecimalField(decimal_places=2, max_digits=20)),
+                ("label", models.CharField(max_length=200)),
+                ("profit", models.DecimalField(decimal_places=2, max_digits=20)),
+                (
+                    "content",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.PROTECT,
+                        related_name="kit_content",
+                        to="bigbox.product",
+                    ),
+                ),
             ],
         ),
     ]

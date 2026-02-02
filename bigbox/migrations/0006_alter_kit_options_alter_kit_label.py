@@ -6,17 +6,17 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('bigbox', '0005_alter_kit_cost_alter_kit_price_alter_kit_profit_and_more'),
+        ("bigbox", "0005_alter_kit_cost_alter_kit_price_alter_kit_profit_and_more"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='kit',
-            options={'ordering': ['label']},
+            name="kit",
+            options={"ordering": ["label"]},
         ),
         migrations.AlterField(
-            model_name='kit',
-            name='label',
+            model_name="kit",
+            name="label",
             field=models.CharField(max_length=50),
         ),
     ]

@@ -1,0 +1,192 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-10">
+                <div class="card shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="text-center">
+                            <h1 class="h4 mb-1">Dashboard</h1>
+                            <div class="text-muted">Bem-vindo, {{ request.user.username }}</div>
+                        </div>
+
+                        <div class="row justify-content-center mt-3">
+                            <div class="col-12 col-md-6">
+                                <form method="get" class="d-flex gap-2 justify-content-center">
+                                    <select class="form-select" name="days">
+                                        <option value="7" {% if days == 7 %}selected{% endif %}>Últimos 7 dias</option>
+                                        <option value="30" {% if days == 30 %}selected{% endif %}>Últimos 30 dias</option>
+                                        <option value="90" {% if days == 90 %}selected{% endif %}>Últimos 90 dias</option>
+                                        <option value="365" {% if days == 365 %}selected{% endif %}>Último 1 ano</option>
+                                    </select>
+                                    <button type="submit" class="btn btn-primary">Aplicar</button>
+                                </form>
+                                <div class="text-center text-muted mt-2">
+                                    Período: {{ start_date|date:"d/m/Y" }} - {{ end_date|date:"d/m/Y" }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <div class="row g-3 justify-content-center">
+                            <div class="col-12">
+                                <div class="card bb-card-centered bb-card-hover bb-dashboard-card bb-dashboard-card--wide">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+                                            <div>
+                                                <div class="bb-kpi-title">Top 5 kits no período</div>
+                                                <div class="bb-kpi-value">Por quantidade criada</div>
+                                            </div>
+                                        </div>
+                                        <div class="mt-3" style="height: 260px;">
+                                            <canvas id="topKitsChart" height="260"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-4">
+                                <div class="card bb-card-centered h-100 bb-card-hover bb-dashboard-card">
+                                    <div class="card-body text-center">
+                                        <div class="bb-kpi-title">Kit mais lucrativo</div>
+                                        <div class="bb-kpi-sub">(unitário)</div>
+                                        {% if most_profitable_kit %}
+                                            <div class="h6 m-0 bb-kpi-value">{{ most_profitable_kit.label }}</div>
+                                            <div class="h3 m-0 bb-kpi-value bb-kpi-value--xl">R$ {{ most_profitable_kit.profit|floatformat:2 }}</div>
+                                            <div class="d-grid gap-2 mt-3">
+                                                <a href="{% url 'kit_detail' pk=most_profitable_kit.pk %}" class="btn btn-outline-secondary">Ver Kit</a>
+                                            </div>
+                                        {% else %}
+                                            <div class="h6 m-0 bb-kpi-value">Sem dados</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-4">
+                                <div class="card bb-card-centered h-100 bb-card-hover bb-dashboard-card">
+                                    <div class="card-body text-center">
+                                        <div class="bb-kpi-title">Kit com maior lucro total</div>
+                                        <div class="bb-kpi-sub">(somando ocorrências no período)</div>
+                                        {% if most_profitable_kit_total %}
+                                            <div class="h6 m-0 bb-kpi-value">{{ most_profitable_kit_total.label }}</div>
+                                            <div class="h3 m-0 bb-kpi-value bb-kpi-value--xl">R$ {{ most_profitable_kit_total.profit_total|floatformat:2 }}</div>
+                                            <div class="bb-kpi-sub">{{ most_profitable_kit_total.count }}x no período</div>
+                                            <div class="d-grid gap-2 mt-3">
+                                                <a href="{% url 'kit_detail' pk=most_profitable_kit_total.latest_pk %}" class="btn btn-outline-secondary">Ver Kit</a>
+                                            </div>
+                                        {% else %}
+                                            <div class="h6 m-0 bb-kpi-value">Sem dados</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-4">
+                                <div class="card bb-card-centered h-100 bb-card-hover bb-dashboard-card">
+                                    <div class="card-body text-center">
+                                        <div class="bb-kpi-title">Produto mais utilizado</div>
+                                        <div class="bb-kpi-sub">em kits</div>
+                                        {% if most_used_product %}
+                                            <div class="h6 m-0 bb-kpi-value">{{ most_used_product.name }}</div>
+                                            <div class="h3 m-0 bb-kpi-value bb-kpi-value--xl">{{ most_used_product_count }}</div>
+                                            <div class="bb-kpi-sub">vezes selecionado</div>
+                                            <div class="d-grid gap-2 mt-3">
+                                                <a href="{% url 'product_detail' pk=most_used_product.pk %}" class="btn btn-outline-secondary">Ver Produto</a>
+                                            </div>
+                                        {% else %}
+                                            <div class="h6 m-0 bb-kpi-value">Sem dados</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <div class="card bb-card-centered h-100 bb-card-hover bb-dashboard-card">
+                                    <div class="card-body text-center">
+                                        <div class="bb-kpi-title">Produto com maior lucro estimado</div>
+                                        <div class="bb-kpi-sub">(split do lucro dos kits do período)</div>
+                                        {% if most_profitable_product %}
+                                            <div class="h6 m-0 bb-kpi-value">{{ most_profitable_product.name }}</div>
+                                            <div class="h3 m-0 bb-kpi-value bb-kpi-value--xl">R$ {{ most_profitable_product_profit|floatformat:2 }}</div>
+                                            <div class="d-grid gap-2 mt-3">
+                                                <a href="{% url 'product_detail' pk=most_profitable_product.pk %}" class="btn btn-outline-secondary">Ver Produto</a>
+                                            </div>
+                                        {% else %}
+                                            <div class="h6 m-0 bb-kpi-value">Sem dados</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <div class="card bb-card-centered h-100 bb-card-hover bb-dashboard-card">
+                                    <div class="card-body text-center">
+                                        <div class="bb-kpi-title">Resumo do período</div>
+                                        <div class="mt-2">
+                                            <div class="bb-kpi-sub">Lucro total</div>
+                                            <div class="h4 m-0 bb-kpi-value bb-kpi-value--xl">R$ {{ kits_profit_total|floatformat:2 }}</div>
+                                        </div>
+                                        <div class="mt-3">
+                                            <div class="bb-kpi-sub">Lucro médio por kit</div>
+                                            <div class="h5 m-0 bb-kpi-value">R$ {{ kits_profit_avg|floatformat:2 }}</div>
+                                        </div>
+                                        <div class="mt-3">
+                                            <div class="bb-kpi-sub">Preço médio do kit</div>
+                                            <div class="h5 m-0 bb-kpi-value">R$ {{ kits_price_avg|floatformat:2 }}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script>
+        (function () {
+            var labels = JSON.parse("{{ top5_kits_chart_labels|escapejs }}");
+            var data = JSON.parse("{{ top5_kits_chart_data|escapejs }}");
+
+            var el = document.getElementById('topKitsChart');
+            if (!el) return;
+
+            new Chart(el, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Quantidade',
+                        data: data,
+                        borderWidth: 1,
+                        backgroundColor: 'rgba(255, 204, 4, 0.22)',
+                        borderColor: 'rgba(255, 204, 4, 0.55)'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        x: {
+                            ticks: { color: 'rgba(255,255,255,0.75)' },
+                            grid: { color: 'rgba(255,255,255,0.08)' }
+                        },
+                        y: {
+                            ticks: { color: 'rgba(255,255,255,0.75)', precision: 0 },
+                            grid: { color: 'rgba(255,255,255,0.08)' },
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        })();
+    </script>
+{% endblock %}
